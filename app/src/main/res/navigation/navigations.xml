@@ -3,13 +3,17 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigations"
-    app:startDestination="@id/homeFragment">
+    app:startDestination="@id/timerFragment">
 
     <fragment
         android:id="@+id/homeFragment"
         android:name="com.example.easyyoga.HomeFragment"
         android:label="fragment_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home">
+        <action
+            android:id="@+id/action_homeFragment_to_daysFragment"
+            app:destination="@id/daysFragment" />
+    </fragment>
     <fragment
         android:id="@+id/reportFragment"
         android:name="com.example.easyyoga.ReportFragment"
@@ -20,4 +24,35 @@
         android:name="com.example.easyyoga.ProfileFragment"
         android:label="fragment_profile"
         tools:layout="@layout/fragment_profile" />
+    <fragment
+        android:id="@+id/daysFragment"
+        android:name="com.example.easyyoga.DaysFragment"
+        android:label="fragment_days"
+        tools:layout="@layout/fragment_days">
+        <action
+            android:id="@+id/action_daysFragment_to_perDayExercisesFragment"
+            app:destination="@id/perDayExercisesFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/perDayExercisesFragment"
+        android:name="com.example.easyyoga.PerDayExercisesFragment"
+        android:label="fragment_per_day_exercises"
+        tools:layout="@layout/fragment_per_day_exercises">
+        <action
+            android:id="@+id/action_perDayExercisesFragment_to_exerciseFragment"
+            app:destination="@id/exerciseFragment" />
+        <action
+            android:id="@+id/action_perDayExercisesFragment_to_timerFragment"
+            app:destination="@id/timerFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/exerciseFragment"
+        android:name="com.example.easyyoga.ExerciseFragment"
+        android:label="fragment_exercise"
+        tools:layout="@layout/fragment_exercise" />
+    <fragment
+        android:id="@+id/timerFragment"
+        android:name="com.example.easyyoga.TimerFragment"
+        android:label="fragment_timer"
+        tools:layout="@layout/fragment_timer" />
 </navigation>

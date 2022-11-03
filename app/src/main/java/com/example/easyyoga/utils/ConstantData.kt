@@ -3,7 +3,7 @@ package com.example.easyyoga.utils
 import com.example.easyyoga.R
 
 class ConstantData {
-	companion object{
+	companion object {
 		val levelList: ArrayList<LevelData> = arrayListOf()
 		fun addList() {
 			levelList.add(LevelData("Beginner plan", R.drawable.beginner_image))

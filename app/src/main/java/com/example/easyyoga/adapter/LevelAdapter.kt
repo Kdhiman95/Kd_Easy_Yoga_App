@@ -1,25 +1,41 @@
 package com.example.easyyoga.adapter
 
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.cardview.widget.CardView
+import androidx.navigation.NavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.easyyoga.R
 import com.example.easyyoga.utils.LevelData
 
-class LevelAdapter(private val list: ArrayList<LevelData>) :
+class LevelAdapter(
+	private val list: ArrayList<LevelData>,
+	private val navController: NavController,
+) :
 	RecyclerView.Adapter<LevelAdapter.LevelViewHolder>() {
 
 	inner class LevelViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
-		val levelText : TextView
-		val levelImage : ImageView
+		private val level: CardView
+		val levelText: TextView
+		val levelImage: ImageView
 
 		init {
+			level = view.findViewById(R.id.levelSelected)
 			levelText = view.findViewById(R.id.levelText)
 			levelImage = view.findViewById(R.id.levelImage)
+
+			level.setOnClickListener {
+				val bundle = Bundle()
+				bundle.putString("Plan", list[adapterPosition].title)
+				bundle.putInt("Img", list[adapterPosition].img)
+				navController.navigate(R.id.action_homeFragment_to_daysFragment, bundle)
+			}
+
 		}
 	}
 

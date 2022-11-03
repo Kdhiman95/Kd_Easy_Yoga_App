@@ -1,59 +1,70 @@
 package com.example.easyyoga
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.easyyoga.adapter.CalenderAdapter
+import com.example.easyyoga.databinding.FragmentReportBinding
+import java.text.SimpleDateFormat
+import java.util.*
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [ReportFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class ReportFragment : Fragment() {
-	// TODO: Rename and change types of parameters
-	private var param1: String? = null
-	private var param2: String? = null
 
-	override fun onCreate(savedInstanceState: Bundle?) {
-		super.onCreate(savedInstanceState)
-		arguments?.let {
-			param1 = it.getString(ARG_PARAM1)
-			param2 = it.getString(ARG_PARAM2)
-		}
-	}
+	private lateinit var binding: FragmentReportBinding
+
+	private val cal = Calendar.getInstance()
+	private val ft = SimpleDateFormat("yyyy-MM-dd")
 
 	override fun onCreateView(
 		inflater: LayoutInflater, container: ViewGroup?,
 		savedInstanceState: Bundle?,
-	): View? {
+	): View {
 		// Inflate the layout for this fragment
-		return inflater.inflate(R.layout.fragment_report, container, false)
+		binding = FragmentReportBinding.inflate(inflater, container, false)
+
+		cal.firstDayOfWeek = Calendar.SUNDAY
+		cal.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY)
+
+		binding.reportFragmentCalenderRecV.layoutManager =
+			LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+
+		binding.reportFragmentCalenderRecV.adapter = CalenderAdapter(getCurrent())
+
+		binding.reportFragmentNextBtn.setOnClickListener {
+			binding.reportFragmentCalenderRecV.adapter = CalenderAdapter(getNext())
+		}
+
+		binding.reportFragmentPrevBtn.setOnClickListener {
+			binding.reportFragmentCalenderRecV.adapter = CalenderAdapter(getPre())
+		}
+
+		return binding.root
 	}
 
-	companion object {
-		/**
-		 * Use this factory method to create a new instance of
-		 * this fragment using the provided parameters.
-		 *
-		 * @param param1 Parameter 1.
-		 * @param param2 Parameter 2.
-		 * @return A new instance of fragment ReportFragment.
-		 */
-		// TODO: Rename and change types and number of parameters
-		@JvmStatic
-		fun newInstance(param1: String, param2: String) =
-			ReportFragment().apply {
-				arguments = Bundle().apply {
-					putString(ARG_PARAM1, param1)
-					putString(ARG_PARAM2, param2)
-				}
-			}
+	private fun getCurrent(): ArrayList<String> {
+		val dates: ArrayList<String> = arrayListOf()
+
+		val temp = cal.time
+
+		for (i in 0..6) {
+			dates.add(ft.format(cal.time))
+			cal.add(Calendar.DATE, 1)
+		}
+
+		cal.time = temp
+		return dates
+	}
+
+	private fun getNext(): ArrayList<String> {
+		cal.add(Calendar.DATE, +7)
+		return getCurrent()
+	}
+
+	private fun getPre(): ArrayList<String> {
+		cal.add(Calendar.DATE, -7)
+		return getCurrent()
 	}
 }

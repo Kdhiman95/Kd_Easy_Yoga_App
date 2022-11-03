@@ -31,6 +31,14 @@ class NavigationFragment : Fragment() {
 
 		setupWithNavController(binding.mainBottomNavigation, navController)
 
+		navController.addOnDestinationChangedListener { _, destination, _ ->
+			if (destination.id == R.id.homeFragment || destination.id == R.id.reportFragment || destination.id == R.id.profileFragment) {
+				binding.mainBottomNavigation.visibility = View.VISIBLE
+			} else {
+				binding.mainBottomNavigation.visibility = View.GONE
+			}
+		}
+
 		return binding.root
 	}
 
