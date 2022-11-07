@@ -10,21 +10,28 @@ import androidx.navigation.NavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.easyyoga.R
 
-class DaysAdapter(private val list: ArrayList<String>, private val navController: NavController) :
+class DaysAdapter(
+	private val list: ArrayList<String>,
+	private val navController: NavController,
+	private val bundle: Bundle
+) :
 	RecyclerView.Adapter<DaysAdapter.DayViewHolder>() {
 
 	inner class DayViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
-		private val dayExercises: CardView
 		val day: TextView
 
 		init {
-			dayExercises = view.findViewById(R.id.exerciseItemView)
 			day = view.findViewById(R.id.dayItemText)
 
-			dayExercises.setOnClickListener {
+			val plan = bundle.getString("Plan")
+			val img = bundle.getInt("Img")
+
+			view.setOnClickListener {
 				val bundle = Bundle()
 				bundle.putString("Day", list[adapterPosition])
+				bundle.putString("Plan",plan)
+				bundle.putInt("Img",img)
 				navController.navigate(R.id.action_daysFragment_to_perDayExercisesFragment, bundle)
 			}
 

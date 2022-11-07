@@ -21,13 +21,19 @@ class DaysFragment : Fragment() {
 		// Inflate the layout for this fragment
 		binding = FragmentDaysBinding.inflate(inflater, container, false)
 
-		binding.daysFragmentImage.setImageResource(requireArguments().getInt("Img"))
-		binding.daysFragmentToolbar.title = requireArguments().getString("Plan")
+		val plan = requireArguments().getString("Plan")
+		val img = requireArguments().getInt("Img")
+
+		binding.daysFragmentImage.setImageResource(img)
+		binding.daysFragmentToolbar.title = plan
+		val bundle = Bundle()
+		bundle.putString("Plan",plan)
+		bundle.putInt("Img", img)
 
 		binding.daysFragmentRecV.layoutManager =
 			LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
 
-		binding.daysFragmentRecV.adapter = DaysAdapter(getDaysList(), findNavController())
+		binding.daysFragmentRecV.adapter = DaysAdapter(getDaysList(), findNavController(),bundle)
 
 		return binding.root
 	}

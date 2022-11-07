@@ -1,7 +1,6 @@
 <resources>
     <string name="app_name">Easy Yoga</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="hello_user">Hello User</string>
     <string name="home">Home</string>
     <string name="profile">Profile</string>
     <string name="report">Report</string>
@@ -14,4 +13,19 @@
     <string name="week">Week</string>
     <string name="no_record_found">No record found</string>
     <string name="next">Next</string>
+    <string name="signIn">SignIn</string>
+    <string name="weight">Weight</string>
+    <string name="_50">50</string>
+    <string name="kg">Kg</string>
+    <string name="height">Height</string>
+    <string name="_5_7">5.7</string>
+    <string name="ft_in">ft in</string>
+    <string name="_5">5</string>
+    <string name="_7">7</string>
+    <string name="in">in</string>
+    <string name="ft">ft</string>
+    <string name="save">Save</string>
+    <string name="exercise_name">Exercise name</string>
+    <string name="min">min</string>
+    <string name="your_body_and_muscles_need_to_get_some_rest">Your body and muscles need to get some rest</string>
 </resources>
