@@ -61,6 +61,7 @@
                     android:textSize="22sp" />
 
                 <ImageButton
+                    android:id="@+id/minusDurationBtn"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:backgroundTint="@color/white"
@@ -80,6 +81,7 @@
                     android:textStyle="bold" />
 
                 <ImageButton
+                    android:id="@+id/plusDurationBtn"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:backgroundTint="@color/white"
@@ -102,11 +104,13 @@
     </ScrollView>
 
     <com.google.android.material.button.MaterialButton
+        android:id="@+id/saveBtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity=""
         android:layout_margin="20dp"
-        android:text="@string/close"
+        android:text="@string/save"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent" />

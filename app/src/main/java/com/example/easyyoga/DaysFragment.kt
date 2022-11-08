@@ -8,7 +8,10 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.easyyoga.adapter.DaysAdapter
+import com.example.easyyoga.adapter.PerDayExercisesAdapter
 import com.example.easyyoga.databinding.FragmentDaysBinding
+import com.example.easyyoga.utils.LevelsData.Companion.levelImg
+import com.example.easyyoga.utils.LevelsData.Companion.levelName
 
 class DaysFragment : Fragment() {
 
@@ -21,21 +24,18 @@ class DaysFragment : Fragment() {
 		// Inflate the layout for this fragment
 		binding = FragmentDaysBinding.inflate(inflater, container, false)
 
-		val plan = requireArguments().getString("Plan")
-		val img = requireArguments().getInt("Img")
-
-		binding.daysFragmentImage.setImageResource(img)
-		binding.daysFragmentToolbar.title = plan
-		val bundle = Bundle()
-		bundle.putString("Plan",plan)
-		bundle.putInt("Img", img)
+		binding.daysFragmentImage.setImageResource(levelImg)
+		binding.daysFragmentToolbar.title = levelName
 
 		binding.daysFragmentRecV.layoutManager =
 			LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
 
-		binding.daysFragmentRecV.adapter = DaysAdapter(getDaysList(), findNavController(),bundle)
-
 		return binding.root
+	}
+
+	override fun onResume() {
+		binding.daysFragmentRecV.adapter = DaysAdapter(getDaysList(), findNavController())
+		super.onResume()
 	}
 
 	private fun getDaysList(): ArrayList<String> {

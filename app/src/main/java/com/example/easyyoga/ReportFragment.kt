@@ -4,12 +4,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.easyyoga.adapter.CalenderAdapter
 import com.example.easyyoga.databinding.FragmentReportBinding
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.math.roundToInt
 
 class ReportFragment : Fragment() {
 
@@ -42,6 +44,24 @@ class ReportFragment : Fragment() {
 		}
 
 		return binding.root
+	}
+
+	override fun onResume() {
+		val pref = requireContext().getSharedPreferences("UserData",AppCompatActivity.MODE_PRIVATE)
+
+		val weight = pref.getString("weight",null)!!.toFloat()
+		val feet = pref.getString("heightFeet",null)!!.toFloat()
+		val inch = pref.getString("heightIn",null)!!.toFloat()
+
+		val finalInch = (feet*12)+inch
+
+		val heightM = (finalInch * 2.54)/100
+
+		val bmi = (weight / (heightM * heightM))
+
+		binding.bmiText.text = ((bmi * 100.0).roundToInt()/100.0).toString()
+
+		super.onResume()
 	}
 
 	private fun getCurrent(): ArrayList<String> {

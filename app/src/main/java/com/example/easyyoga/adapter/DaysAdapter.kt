@@ -4,38 +4,50 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.navigation.NavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.easyyoga.R
+import com.google.android.material.button.MaterialButton
 
 class DaysAdapter(
 	private val list: ArrayList<String>,
 	private val navController: NavController,
-	private val bundle: Bundle
 ) :
 	RecyclerView.Adapter<DaysAdapter.DayViewHolder>() {
 
 	inner class DayViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
-		val day: TextView
+		private val days: TextView
+		private val startBtn: MaterialButton
+		private val restImg: ImageView
 
 		init {
-			day = view.findViewById(R.id.dayItemText)
-
-			val plan = bundle.getString("Plan")
-			val img = bundle.getInt("Img")
+			days = view.findViewById(R.id.dayItemText)
+			startBtn = view.findViewById(R.id.exerciseItemStartBtn)
+			restImg = view.findViewById(R.id.restImageView)
 
 			view.setOnClickListener {
 				val bundle = Bundle()
-				bundle.putString("Day", list[adapterPosition])
-				bundle.putString("Plan",plan)
-				bundle.putInt("Img",img)
-				navController.navigate(R.id.action_daysFragment_to_perDayExercisesFragment, bundle)
+				bundle.putString("Day",list[adapterPosition])
+				navController.navigate(R.id.action_daysFragment_to_perDayExercisesFragment,bundle)
 			}
-
 		}
+
+		fun bind(day: String) {
+			days.text = day
+			val d = (day.subSequence(day.length-1,day.length) as String).toInt()
+			if(d%5==0){
+				restImg.visibility = View.VISIBLE
+				startBtn.visibility = View.GONE
+			} else {
+				restImg.visibility = View.GONE
+				startBtn.visibility = View.VISIBLE
+			}
+		}
+
 	}
 
 	override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DayViewHolder {
@@ -45,7 +57,7 @@ class DaysAdapter(
 	}
 
 	override fun onBindViewHolder(holder: DayViewHolder, position: Int) {
-		holder.day.text = list[position]
+		holder.bind(list[position])
 	}
 
 	override fun getItemCount(): Int = list.size

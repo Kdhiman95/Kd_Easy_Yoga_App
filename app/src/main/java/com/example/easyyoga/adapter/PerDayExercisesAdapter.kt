@@ -16,7 +16,7 @@ import com.example.easyyoga.utils.Exercises
 class PerDayExercisesAdapter(
 	private val list: ArrayList<Exercises>,
 	private val perDayExercisesFragment: PerDayExercisesFragment,
-	private val navController: NavController
+	private val navController: NavController,
 ) :
 	RecyclerView.Adapter<PerDayExercisesAdapter.PerDayViewHolder>() {
 	inner class PerDayViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -30,12 +30,14 @@ class PerDayExercisesAdapter(
 			exerciseName = view.findViewById(R.id.exerciseName)
 			exerciseDuration = view.findViewById(R.id.exerciseDuration)
 
+
 			view.setOnClickListener {
 				val temp = list[adapterPosition]
 				val bundle = Bundle()
-				bundle.putInt("Img",temp.img)
-				bundle.putString("ExerciseName",temp.exerciseName)
-				bundle.putString("Detail",temp.detail)
+				bundle.putInt("Id", temp.id)
+				bundle.putInt("Img", temp.img)
+				bundle.putString("ExerciseName", temp.exerciseName)
+				bundle.putString("Detail", temp.detail)
 				bundle.putLong("Duration",temp.duration)
 				navController.navigate(R.id.action_perDayExercisesFragment_to_exerciseFragment,bundle)
 			}
@@ -49,7 +51,8 @@ class PerDayExercisesAdapter(
 	}
 
 	override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PerDayViewHolder {
-		val view = LayoutInflater.from(parent.context).inflate(R.layout.exercise_layout,parent,false)
+		val view =
+			LayoutInflater.from(parent.context).inflate(R.layout.exercise_layout, parent, false)
 		return PerDayViewHolder(view)
 	}
 

@@ -4,13 +4,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.easyyoga.adapter.LevelAdapter
 import com.example.easyyoga.databinding.FragmentHomeBinding
-import com.example.easyyoga.viewmodels.HomeViewModel
+import com.example.easyyoga.utils.LevelsData.Companion.levelsList
 
 class HomeFragment : Fragment() {
 
@@ -25,13 +25,27 @@ class HomeFragment : Fragment() {
 		// Inflate the layout for this fragment
 		binding = FragmentHomeBinding.inflate(inflater, container, false)
 
-		val homeModal = ViewModelProvider(this)[HomeViewModel::class.java]
+		val pref = requireContext().getSharedPreferences("UserData", AppCompatActivity.MODE_PRIVATE)
+		val editor = pref.edit()
+
+		if (pref.getString("Weight", "")!!.isEmpty() && pref.getString("heightFeet", "")!!
+				.isEmpty() && pref.getString("heightIn", "")!!.isEmpty()
+		) {
+			editor.putString("weight", "60")
+			editor.putString("heightFeet", "5")
+			editor.putString("heightIn", "7")
+			editor.apply()
+		}
 
 		binding.homeFragmentRecV.layoutManager =
 			LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
 
-		binding.homeFragmentRecV.adapter = LevelAdapter(homeModal.getList(), findNavController())
-
 		return binding.root
 	}
+
+	override fun onResume() {
+		binding.homeFragmentRecV.adapter = LevelAdapter(levelsList, findNavController())
+		super.onResume()
+	}
+
 }

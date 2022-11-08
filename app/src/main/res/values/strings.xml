@@ -28,4 +28,9 @@
     <string name="exercise_name">Exercise name</string>
     <string name="min">min</string>
     <string name="your_body_and_muscles_need_to_get_some_rest">Your body and muscles need to get some rest</string>
+    <string name="rest">Rest</string>
+    <string name="feets">Feets</string>
+    <string name="inches">Inches</string>
+    <string name="bmi">BMI</string>
+    <string name="bmitext">bmitext</string>
 </resources>

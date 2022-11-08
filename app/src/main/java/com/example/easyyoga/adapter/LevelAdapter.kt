@@ -10,32 +10,34 @@ import androidx.cardview.widget.CardView
 import androidx.navigation.NavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.easyyoga.R
-import com.example.easyyoga.utils.LevelData
+import com.example.easyyoga.utils.Levels
+import com.example.easyyoga.utils.LevelsData.Companion.levelImg
+import com.example.easyyoga.utils.LevelsData.Companion.levelName
 
 class LevelAdapter(
-	private val list: ArrayList<LevelData>,
+	private val list: ArrayList<Levels>,
 	private val navController: NavController,
 ) :
 	RecyclerView.Adapter<LevelAdapter.LevelViewHolder>() {
 
 	inner class LevelViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
-		private val level: CardView
 		val levelText: TextView
 		val levelImage: ImageView
 
 		init {
-			level = view.findViewById(R.id.levelSelected)
 			levelText = view.findViewById(R.id.levelText)
 			levelImage = view.findViewById(R.id.levelImage)
 
-			level.setOnClickListener {
-				val bundle = Bundle()
-				bundle.putString("Plan", list[adapterPosition].title)
-				bundle.putInt("Img", list[adapterPosition].img)
-				navController.navigate(R.id.action_homeFragment_to_daysFragment, bundle)
+			view.setOnClickListener {
+				levelName = list[adapterPosition].title
+				levelImg = list[adapterPosition].img
+				navController.navigate(R.id.action_homeFragment_to_daysFragment)
 			}
-
+		}
+		fun bind(levels: Levels) {
+			levelText.text = levels.title
+			levelImage.setImageResource(levels.img)
 		}
 	}
 
@@ -45,8 +47,7 @@ class LevelAdapter(
 	}
 
 	override fun onBindViewHolder(holder: LevelViewHolder, position: Int) {
-		holder.levelText.text = list[position].title
-		holder.levelImage.setImageResource(list[position].img)
+		holder.bind(list[position])
 	}
 
 	override fun getItemCount(): Int = list.size
