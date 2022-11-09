@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.cardview.widget.CardView
 import androidx.navigation.NavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.easyyoga.R
@@ -29,17 +28,23 @@ class DaysAdapter(
 			startBtn = view.findViewById(R.id.exerciseItemStartBtn)
 			restImg = view.findViewById(R.id.restImageView)
 
+			val bundle = Bundle()
+
 			view.setOnClickListener {
-				val bundle = Bundle()
-				bundle.putString("Day",list[adapterPosition])
-				navController.navigate(R.id.action_daysFragment_to_perDayExercisesFragment,bundle)
+				bundle.putString("Day", list[adapterPosition])
+				navController.navigate(R.id.action_daysFragment_to_perDayExercisesFragment, bundle)
+			}
+
+			startBtn.setOnClickListener {
+				bundle.putString("Day", list[adapterPosition])
+				navController.navigate(R.id.action_daysFragment_to_perDayExercisesFragment, bundle)
 			}
 		}
 
 		fun bind(day: String) {
 			days.text = day
-			val d = (day.subSequence(day.length-1,day.length) as String).toInt()
-			if(d%5==0){
+			val d = (day.subSequence(day.length - 1, day.length) as String).toInt()
+			if (d % 5 == 0) {
 				restImg.visibility = View.VISIBLE
 				startBtn.visibility = View.GONE
 			} else {

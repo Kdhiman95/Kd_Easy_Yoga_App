@@ -6,6 +6,10 @@ import java.time.Duration
 class ExercisesData {
 
 	companion object{
+		var totalDurationPerDay = 0L
+
+		var dailyList = ArrayList<Exercises>()
+
 		val beginnerPlanList = ArrayList<Exercises>()
 		val intermediatePlanList = ArrayList<Exercises>()
 		val advancedPlanList = ArrayList<Exercises>()

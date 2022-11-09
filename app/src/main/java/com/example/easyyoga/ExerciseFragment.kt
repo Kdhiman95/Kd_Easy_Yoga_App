@@ -40,13 +40,17 @@ class ExerciseFragment : Fragment() {
 		binding.exerciseDetail.text = detail
 
 		binding.plusDurationBtn.setOnClickListener {
-			duration += 5L
+			if(duration<120) {
+				duration += 5L
+			}
 			binding.exerciseDuration.text = duration.toString()
 			setSaveVisibility(duration)
 		}
 
 		binding.minusDurationBtn.setOnClickListener {
-			duration -= 5L
+			if(duration>0) {
+				duration -= 5L
+			}
 			binding.exerciseDuration.text = duration.toString()
 			setSaveVisibility(duration)
 		}

@@ -12,6 +12,7 @@ import com.example.easyyoga.databinding.FragmentPerDayExercisesBinding
 import com.example.easyyoga.utils.Exercises
 import com.example.easyyoga.utils.ExercisesData.Companion.advancedPlanList
 import com.example.easyyoga.utils.ExercisesData.Companion.beginnerPlanList
+import com.example.easyyoga.utils.ExercisesData.Companion.dailyList
 import com.example.easyyoga.utils.ExercisesData.Companion.intermediatePlanList
 import com.example.easyyoga.utils.LevelsData.Companion.levelImg
 import com.example.easyyoga.utils.LevelsData.Companion.levelName
@@ -31,6 +32,10 @@ class PerDayExercisesFragment : Fragment() {
 		binding.perDayText.text = requireArguments().getString("Day")
 
 		binding.perDayRecV.layoutManager = LinearLayoutManager(requireContext(),LinearLayoutManager.VERTICAL,false)
+
+		binding.exerciseStartButton.setOnClickListener {
+			findNavController().navigate(R.id.action_perDayExercisesFragment_to_timerFragment)
+		}
 
 		return binding.root
 	}
@@ -58,6 +63,7 @@ class PerDayExercisesFragment : Fragment() {
 			binding.restImageView.visibility = View.GONE
 			binding.perDayRecV.visibility = View.VISIBLE
 			binding.exerciseStartButton.visibility = View.VISIBLE
+			dailyList = list
 			binding.perDayRecV.adapter = PerDayExercisesAdapter(list,this,findNavController())
 		}
 

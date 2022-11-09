@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.easyyoga.adapter.CalenderAdapter
 import com.example.easyyoga.databinding.FragmentReportBinding
+import com.example.easyyoga.utils.ExercisesData.Companion.totalDurationPerDay
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.math.roundToInt
@@ -60,6 +61,8 @@ class ReportFragment : Fragment() {
 		val bmi = (weight / (heightM * heightM))
 
 		binding.bmiText.text = ((bmi * 100.0).roundToInt()/100.0).toString()
+
+		binding.totalDurationText.text = totalDurationPerDay.toString()
 
 		super.onResume()
 	}
