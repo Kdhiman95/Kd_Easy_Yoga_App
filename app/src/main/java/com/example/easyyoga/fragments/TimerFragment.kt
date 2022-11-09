@@ -1,10 +1,8 @@
-package com.example.easyyoga
+package com.example.easyyoga.fragments
 
 import android.content.Context
 import android.os.Bundle
 import android.os.CountDownTimer
-import android.os.Handler
-import android.os.Looper
 import android.speech.tts.TextToSpeech
 import android.view.LayoutInflater
 import android.view.View
@@ -13,6 +11,7 @@ import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
+import com.example.easyyoga.R
 import com.example.easyyoga.databinding.FragmentTimerBinding
 import com.example.easyyoga.utils.Exercises
 import com.example.easyyoga.utils.ExercisesData.Companion.dailyList

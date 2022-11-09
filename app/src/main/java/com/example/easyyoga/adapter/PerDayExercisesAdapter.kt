@@ -9,7 +9,7 @@ import android.widget.TextView
 import androidx.navigation.NavController
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.easyyoga.PerDayExercisesFragment
+import com.example.easyyoga.fragments.PerDayExercisesFragment
 import com.example.easyyoga.R
 import com.example.easyyoga.utils.Exercises
 

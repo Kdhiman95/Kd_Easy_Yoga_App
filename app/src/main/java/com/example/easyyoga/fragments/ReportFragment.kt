@@ -1,6 +1,7 @@
-package com.example.easyyoga
+package com.example.easyyoga.fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -74,6 +75,7 @@ class ReportFragment : Fragment() {
 
 		for (i in 0..6) {
 			dates.add(ft.format(cal.time))
+			Log.d("WWWWWWW", "getCurrent: ${ft.format(cal.time)}")
 			cal.add(Calendar.DATE, 1)
 		}
 

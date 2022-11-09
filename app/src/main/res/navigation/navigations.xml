@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.example.easyyoga.HomeFragment"
+        android:name="com.example.easyyoga.fragments.HomeFragment"
         android:label="fragment_home"
         tools:layout="@layout/fragment_home">
         <action
@@ -16,17 +16,17 @@
     </fragment>
     <fragment
         android:id="@+id/reportFragment"
-        android:name="com.example.easyyoga.ReportFragment"
+        android:name="com.example.easyyoga.fragments.ReportFragment"
         android:label="fragment_report"
         tools:layout="@layout/fragment_report" />
     <fragment
         android:id="@+id/profileFragment"
-        android:name="com.example.easyyoga.ProfileFragment"
+        android:name="com.example.easyyoga.fragments.ProfileFragment"
         android:label="fragment_profile"
         tools:layout="@layout/fragment_profile" />
     <fragment
         android:id="@+id/daysFragment"
-        android:name="com.example.easyyoga.DaysFragment"
+        android:name="com.example.easyyoga.fragments.DaysFragment"
         android:label="fragment_days"
         tools:layout="@layout/fragment_days">
         <action
@@ -35,7 +35,7 @@
     </fragment>
     <fragment
         android:id="@+id/perDayExercisesFragment"
-        android:name="com.example.easyyoga.PerDayExercisesFragment"
+        android:name="com.example.easyyoga.fragments.PerDayExercisesFragment"
         android:label="fragment_per_day_exercises"
         tools:layout="@layout/fragment_per_day_exercises">
         <action
@@ -47,12 +47,12 @@
     </fragment>
     <fragment
         android:id="@+id/exerciseFragment"
-        android:name="com.example.easyyoga.ExerciseFragment"
+        android:name="com.example.easyyoga.fragments.ExerciseFragment"
         android:label="fragment_exercise"
         tools:layout="@layout/fragment_exercise" />
     <fragment
         android:id="@+id/timerFragment"
-        android:name="com.example.easyyoga.TimerFragment"
+        android:name="com.example.easyyoga.fragments.TimerFragment"
         android:label="fragment_timer"
         tools:layout="@layout/fragment_timer" >
         <action
