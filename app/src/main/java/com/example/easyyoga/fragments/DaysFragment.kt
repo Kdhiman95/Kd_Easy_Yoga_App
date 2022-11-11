@@ -7,8 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.easyyoga.adapter.DaysAdapter
-import com.example.easyyoga.adapter.PerDayExercisesAdapter
+import com.example.easyyoga.adapters.DaysAdapter
 import com.example.easyyoga.databinding.FragmentDaysBinding
 import com.example.easyyoga.utils.LevelsData.Companion.levelImg
 import com.example.easyyoga.utils.LevelsData.Companion.levelName

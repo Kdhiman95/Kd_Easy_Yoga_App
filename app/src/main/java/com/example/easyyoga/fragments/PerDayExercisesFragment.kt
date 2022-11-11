@@ -8,7 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.easyyoga.R
-import com.example.easyyoga.adapter.PerDayExercisesAdapter
+import com.example.easyyoga.adapters.PerDayExercisesAdapter
 import com.example.easyyoga.databinding.FragmentPerDayExercisesBinding
 import com.example.easyyoga.utils.Exercises
 import com.example.easyyoga.utils.ExercisesData.Companion.advancedPlanList

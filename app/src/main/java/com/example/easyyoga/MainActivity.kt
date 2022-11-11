@@ -16,13 +16,5 @@ class MainActivity : AppCompatActivity() {
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
 		setContentView(R.layout.activity_main)
-		AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-
-		if (levelsList.isEmpty() && beginnerPlanList.isEmpty() && intermediatePlanList.isEmpty() && advancedPlanList.isEmpty()) {
-			addLevelsList()
-			addBeginnerPlanList()
-			addIntermediatePlanList()
-			addAdvancedPlanList()
-		}
 	}
 }

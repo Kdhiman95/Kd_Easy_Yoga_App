@@ -6,17 +6,29 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.easyyoga.adapter.LevelAdapter
+import com.example.easyyoga.adapters.LevelAdapter
 import com.example.easyyoga.databinding.FragmentHomeBinding
+import com.example.easyyoga.utils.EasyYogaApplication
+import com.example.easyyoga.utils.ExercisesData.Companion.totalDurationPerDay
 import com.example.easyyoga.utils.LevelsData.Companion.levelsList
+import com.example.easyyoga.view_models.DurationViewModelFactory
+import com.example.easyyoga.view_models.DurationViewModel
+import com.example.easyyoga.view_models.ExerciseViewModel
+import com.example.easyyoga.view_models.ExerciseViewModelFactory
+import java.text.SimpleDateFormat
+import java.util.*
 
 class HomeFragment : Fragment() {
 
+	private lateinit var durModel: DurationViewModel
 	private lateinit var binding: FragmentHomeBinding
 
-//	val t = TextToSpeech(requireContext(), {}, "Hello")
+	private val cal = Calendar.getInstance()
+	private val ft = SimpleDateFormat("yyyy-MM-dd", Locale.US)
 
 	override fun onCreateView(
 		inflater: LayoutInflater, container: ViewGroup?,
@@ -25,13 +37,16 @@ class HomeFragment : Fragment() {
 		// Inflate the layout for this fragment
 		binding = FragmentHomeBinding.inflate(inflater, container, false)
 
+		val repo = ((activity as FragmentActivity).application as EasyYogaApplication).repository
+		durModel = ViewModelProvider(this,DurationViewModelFactory(repo))[DurationViewModel::class.java]
+
 		val pref = requireContext().getSharedPreferences("UserData", AppCompatActivity.MODE_PRIVATE)
 		val editor = pref.edit()
 
 		if (pref.getString("Weight", "")!!.isEmpty() && pref.getString("heightFeet", "")!!
 				.isEmpty() && pref.getString("heightIn", "")!!.isEmpty()
 		) {
-			editor.putString("weight", "60")
+			editor.putString("weight", "58")
 			editor.putString("heightFeet", "5")
 			editor.putString("heightIn", "7")
 			editor.apply()
@@ -44,6 +59,18 @@ class HomeFragment : Fragment() {
 	}
 
 	override fun onResume() {
+		durModel.getDuration(ft.format(cal.time))
+		durModel.durList.observe(viewLifecycleOwner){
+			totalDurationPerDay = if(it.isNotEmpty()) {
+				var dur = 0L
+				for(i in it){
+					dur += i.totalDuration
+				}
+				dur
+			} else {
+				0L
+			}
+		}
 		binding.homeFragmentRecV.adapter = LevelAdapter(levelsList, findNavController())
 		super.onResume()
 	}

@@ -169,7 +169,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/home_background"
-        android:padding="20dp"
+
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <LinearLayout
@@ -180,6 +180,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_margin="20dp"
                 android:padding="10dp">
 
                 <ImageButton
@@ -217,15 +218,17 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:orientation="horizontal"
-
                 tools:itemCount="7"
+                android:layout_margin="20dp"
                 tools:listitem="@layout/calender_date" />
 
             <TextView
+                android:id="@+id/noRecordText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_margin="20dp"
+                android:visibility="gone"
                 android:text="@string/no_record_found" />
 
             <androidx.recyclerview.widget.RecyclerView

@@ -8,15 +8,26 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.example.easyyoga.R
 import com.example.easyyoga.databinding.FragmentTimerBinding
+import com.example.easyyoga.model.room_database.DurationEntity
+import com.example.easyyoga.model.room_database.ExercisesEntity
+import com.example.easyyoga.utils.EasyYogaApplication
 import com.example.easyyoga.utils.Exercises
 import com.example.easyyoga.utils.ExercisesData.Companion.dailyList
 import com.example.easyyoga.utils.ExercisesData.Companion.totalDurationPerDay
+import com.example.easyyoga.view_models.DurationViewModel
+import com.example.easyyoga.view_models.DurationViewModelFactory
+import com.example.easyyoga.view_models.ExerciseViewModel
+import com.example.easyyoga.view_models.ExerciseViewModelFactory
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import java.text.SimpleDateFormat
 import java.util.*
 
 class TimerFragment : Fragment() {
@@ -24,7 +35,12 @@ class TimerFragment : Fragment() {
 	private lateinit var tts: TextToSpeech
 	private lateinit var binding: FragmentTimerBinding
 	private lateinit var restTimer: CountDownTimer
-	private lateinit var exTimer: CountDownTimer
+	private lateinit var exerciseModel: ExerciseViewModel
+	private lateinit var durModel: DurationViewModel
+
+	private var exTimer: CountDownTimer? = null
+	private val cal = Calendar.getInstance()
+	private val ft = SimpleDateFormat("yyyy-MM-dd", Locale.US)
 
 	private var countEx = 0
 
@@ -34,6 +50,14 @@ class TimerFragment : Fragment() {
 	): View {
 		// Inflate the layout for this fragment
 		binding = FragmentTimerBinding.inflate(inflater, container, false)
+
+		val repo = ((activity as FragmentActivity).application as EasyYogaApplication).repository
+
+		exerciseModel =
+			ViewModelProvider(this, ExerciseViewModelFactory(repo))[ExerciseViewModel::class.java]
+
+		durModel =
+			ViewModelProvider(this, DurationViewModelFactory(repo))[DurationViewModel::class.java]
 
 		binding.dailyProgressIndicator.max = dailyList.size
 
@@ -46,6 +70,7 @@ class TimerFragment : Fragment() {
 					alertDialog.setMessage("Are you  sure you want to Quit?")
 						.setCancelable(false)
 						.setPositiveButton("Yes") { _, _ ->
+							setOrUpdateDuration()
 							findNavController().navigate(R.id.action_timerFragment_to_homeFragment)
 						}
 						.setNegativeButton("No") { _, _ ->
@@ -61,19 +86,41 @@ class TimerFragment : Fragment() {
 
 	override fun onDestroyView() {
 		restTimer.cancel()
-		exTimer.cancel()
+		exTimer?.cancel()
 		super.onDestroyView()
+	}
+
+	private fun setOrUpdateDuration() {
+		val pref = requireContext().getSharedPreferences("UserData", AppCompatActivity.MODE_PRIVATE)
+		val editor = pref.edit()
+		editor.putLong("totalDurationPerDay", totalDurationPerDay)
+		editor.apply()
+		durModel.getDuration(ft.format(cal.time))
+		durModel.durList.observe(viewLifecycleOwner) {
+			if (it.isEmpty()) {
+				val dur = DurationEntity(
+					0,
+					ft.format(cal.time),
+					totalDurationPerDay
+				)
+				durModel.insertDuration(dur)
+			} else {
+				durModel.updateDuration(ft.format(cal.time), totalDurationPerDay)
+			}
+		}
 	}
 
 	private fun startTimer(index: Int, context: Context) {
 		if (index == dailyList.size) {
+			setOrUpdateDuration()
+			findNavController().navigate(R.id.action_timerFragment_to_homeFragment)
 			return
 		}
 		updateUi(dailyList[index])
 		val ready =
 			"Ready to go the next ${dailyList[index].duration} seconds ${dailyList[index].exerciseName}"
 		binding.instructionText.text = ready
-		//speakText(ready, context)
+		speakText(ready, context)
 
 		binding.timerProgress.max = 10
 		restTimer = object : CountDownTimer(10000, 1000) {
@@ -83,9 +130,20 @@ class TimerFragment : Fragment() {
 			}
 
 			override fun onFinish() {
+				val temp = dailyList[index]
+				val ex = ExercisesEntity(
+					0,
+					temp.id,
+					temp.exerciseName,
+					temp.detail,
+					temp.duration,
+					temp.img,
+					ft.format(cal.time)
+				)
+				exerciseModel.insertExercise(ex)
 				val start = "Start"
 				binding.instructionText.text = start
-				//speakText(start, context)
+				speakText(start, context)
 				binding.timerProgress.max = dailyList[index].duration.toInt()
 				exTimer = object : CountDownTimer(dailyList[index].duration * 1000, 1000) {
 					override fun onTick(miliTime: Long) {
@@ -93,9 +151,9 @@ class TimerFragment : Fragment() {
 						val seconds = miliTime / 1000
 						binding.timerText.text = (seconds).toString()
 						binding.timerProgress.progress = (seconds).toInt()
-						if(seconds == (dailyList[index].duration/2)){
+						if (seconds == (dailyList[index].duration / 2)) {
 							val halfTimeText = "Half time"
-							//speakText(halfTimeText,context)
+							speakText(halfTimeText, context)
 						}
 					}
 
@@ -119,7 +177,7 @@ class TimerFragment : Fragment() {
 			if (it == TextToSpeech.SUCCESS) {
 				tts.language = Locale.US
 				tts.setSpeechRate(1.0f)
-				tts.speak(text, TextToSpeech.QUEUE_ADD, null)
+				tts.speak(text, TextToSpeech.QUEUE_ADD, null,"")
 			}
 		}
 	}

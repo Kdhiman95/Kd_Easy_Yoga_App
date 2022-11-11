@@ -1,4 +1,4 @@
-package com.example.easyyoga.adapter
+package com.example.easyyoga.adapters
 
 import android.os.Bundle
 import android.view.LayoutInflater
