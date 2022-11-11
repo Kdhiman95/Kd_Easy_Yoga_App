@@ -153,7 +153,7 @@ class TimerFragment : Fragment() {
 						binding.timerProgress.progress = (seconds).toInt()
 						if (seconds == (dailyList[index].duration / 2)) {
 							val halfTimeText = "Half time"
-							speakText(halfTimeText, context)
+//							speakText(halfTimeText, context)
 						}
 					}
 
