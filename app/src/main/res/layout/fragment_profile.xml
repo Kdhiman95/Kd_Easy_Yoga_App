@@ -20,21 +20,17 @@
             android:minWidth="175dp"
             android:minHeight="175dp"
             app:cardCornerRadius="100dp"
-            app:cardElevation="25dp"
-            app:cardMaxElevation="50dp"
+            app:cardElevation="50dp"
+            app:cardMaxElevation="100dp"
             app:cardPreventCornerOverlap="true"
             app:strokeColor="@color/white">
 
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="175dp"
+                android:layout_height="175dp"
                 android:contentDescription="@string/app_name"
-                android:minWidth="175dp"
-                android:minHeight="175dp"
                 android:scaleType="centerCrop"
-                android:src="@drawable/ic_baseline_person_24"
-                android:tint="@color/level_color"
-                tools:ignore="UseAppTint" />
+                android:src="@drawable/beginner_image" />
 
         </com.google.android.material.card.MaterialCardView>
 

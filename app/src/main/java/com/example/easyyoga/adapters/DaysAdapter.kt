@@ -12,44 +12,45 @@ import com.example.easyyoga.R
 import com.google.android.material.button.MaterialButton
 
 class DaysAdapter(
-	private val list: ArrayList<String>,
+	private val list: ArrayList<Int>,
+	private val totalDay: Int,
 	private val navController: NavController,
 ) :
 	RecyclerView.Adapter<DaysAdapter.DayViewHolder>() {
 
-	inner class DayViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+	inner class DayViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
 
-		private val days: TextView
-		private val startBtn: MaterialButton
-		private val restImg: ImageView
+		private val days: TextView = view.findViewById(R.id.dayItemText)
+		private val startBtn: MaterialButton = view.findViewById(R.id.exerciseItemStartBtn)
+		private val restImg: ImageView = view.findViewById(R.id.restImageView)
 
-		init {
-			days = view.findViewById(R.id.dayItemText)
-			startBtn = view.findViewById(R.id.exerciseItemStartBtn)
-			restImg = view.findViewById(R.id.restImageView)
+		fun bind(day: Int) {
+			days.text = day.toString()
+
+			if (day == totalDay+1) {
+				startBtn.visibility = View.VISIBLE
+			} else {
+				startBtn.visibility = View.GONE
+			}
+
+			if (day % 5 == 0) {
+				restImg.visibility = View.VISIBLE
+			} else {
+				restImg.visibility = View.GONE
+			}
 
 			val bundle = Bundle()
 
-			view.setOnClickListener {
-				bundle.putString("Day", list[adapterPosition])
-				navController.navigate(R.id.action_daysFragment_to_perDayExercisesFragment, bundle)
-			}
+			if(day <= totalDay+1){
+				view.setOnClickListener {
+					bundle.putString("Day", "Day ${list[adapterPosition]}")
+					navController.navigate(R.id.action_daysFragment_to_perDayExercisesFragment, bundle)
+				}
 
-			startBtn.setOnClickListener {
-				bundle.putString("Day", list[adapterPosition])
-				navController.navigate(R.id.action_daysFragment_to_perDayExercisesFragment, bundle)
-			}
-		}
-
-		fun bind(day: String) {
-			days.text = day
-			val d = (day.subSequence(day.length - 1, day.length) as String).toInt()
-			if (d % 5 == 0) {
-				restImg.visibility = View.VISIBLE
-				startBtn.visibility = View.GONE
-			} else {
-				restImg.visibility = View.GONE
-				startBtn.visibility = View.VISIBLE
+				startBtn.setOnClickListener {
+					bundle.putString("Day", "Day ${list[adapterPosition]}")
+					navController.navigate(R.id.action_daysFragment_to_perDayExercisesFragment, bundle)
+				}
 			}
 		}
 

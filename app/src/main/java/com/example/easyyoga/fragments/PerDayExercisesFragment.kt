@@ -32,7 +32,8 @@ class PerDayExercisesFragment : Fragment() {
 		binding.perDayImageView.setImageResource(levelImg)
 		binding.perDayText.text = requireArguments().getString("Day")
 
-		binding.perDayRecV.layoutManager = LinearLayoutManager(requireContext(),LinearLayoutManager.VERTICAL,false)
+		binding.perDayRecV.layoutManager =
+			LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
 
 		binding.exerciseStartButton.setOnClickListener {
 			findNavController().navigate(R.id.action_perDayExercisesFragment_to_timerFragment)
@@ -46,15 +47,20 @@ class PerDayExercisesFragment : Fragment() {
 
 		val day = requireArguments().getString("Day")!!
 
-		val perDay = (day.subSequence(day.length-1,day.length) as String).toInt()
+		val perDay = (day.subSequence(day.length - 1, day.length) as String).toInt()
 
-		val list = perDayList(tempList,perDay)
+		val list = perDayList(tempList, perDay)
 
 		val duration = getDuration(list)
 
-		binding.perDayDuration.text = (duration/60).toString()
+		val min = duration / 60
+		val sec = duration % 60
 
-		if(list.isEmpty()){
+		val totalD = "$min min $sec s"
+
+		binding.perDayDuration.text = totalD
+
+		if (list.isEmpty()) {
 			binding.restTextView.visibility = View.VISIBLE
 			binding.restImageView.visibility = View.VISIBLE
 			binding.perDayRecV.visibility = View.GONE
@@ -65,7 +71,7 @@ class PerDayExercisesFragment : Fragment() {
 			binding.perDayRecV.visibility = View.VISIBLE
 			binding.exerciseStartButton.visibility = View.VISIBLE
 			dailyList = list
-			binding.perDayRecV.adapter = PerDayExercisesAdapter(list,this,findNavController())
+			binding.perDayRecV.adapter = PerDayExercisesAdapter(list, this, findNavController())
 		}
 
 		super.onResume()

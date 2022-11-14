@@ -1,5 +1,6 @@
 package com.example.easyyoga.fragments
 
+import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -12,13 +13,15 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.easyyoga.adapters.CalenderAdapter
 import com.example.easyyoga.adapters.ExerciseAdapter
 import com.example.easyyoga.databinding.FragmentReportBinding
+import com.example.easyyoga.model.room_database.DurationEntity
 import com.example.easyyoga.model.room_database.ExercisesEntity
+import com.example.easyyoga.utils.Constant.Companion.cal
+import com.example.easyyoga.utils.Constant.Companion.ft
 import com.example.easyyoga.utils.EasyYogaApplication
 import com.example.easyyoga.view_models.DurationViewModel
 import com.example.easyyoga.view_models.DurationViewModelFactory
 import com.example.easyyoga.view_models.ExerciseViewModel
 import com.example.easyyoga.view_models.ExerciseViewModelFactory
-import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.math.roundToInt
 
@@ -28,10 +31,7 @@ class ReportFragment : Fragment() {
 	private lateinit var exModel: ExerciseViewModel
 	private lateinit var durModel: DurationViewModel
 
-	private val cal = Calendar.getInstance()
-	private val ft = SimpleDateFormat("yyyy-MM-dd", Locale.US)
-
-	private val presentCal = Calendar.getInstance()
+	private val weekCal = Calendar.getInstance()
 
 	override fun onCreateView(
 		inflater: LayoutInflater, container: ViewGroup?,
@@ -48,8 +48,8 @@ class ReportFragment : Fragment() {
 		durModel =
 			ViewModelProvider(this, DurationViewModelFactory(repo))[DurationViewModel::class.java]
 
-		cal.firstDayOfWeek = Calendar.SUNDAY
-		cal.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY)
+		weekCal.firstDayOfWeek = Calendar.SUNDAY
+		weekCal.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY)
 
 		binding.reportFragmentCalenderRecV.layoutManager =
 			LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
@@ -88,21 +88,35 @@ class ReportFragment : Fragment() {
 
 		binding.bmiText.text = ((bmi * 100.0).roundToInt() / 100.0).toString()
 
-		durModel.getDuration(ft.format(presentCal.time))
+		if (bmi <= 18.5)
+			binding.bmiText.setTextColor(Color.BLUE)
+		else if (bmi >= 25)
+			binding.bmiText.setTextColor(Color.RED)
+		else
+			binding.bmiText.setTextColor(Color.GREEN)
+
+
+		durModel.getDuration(ft.format(cal.time))
+		var duration = 0L
 		durModel.durList.observe(viewLifecycleOwner) {
 			if (it.isNotEmpty()) {
-				binding.totalDurationText.text = it[0].totalDuration.toString()
+				duration = getDur(it)
+				val min = duration / 60
+				val sec = duration % 60
+				val totalD = "$min min $sec s"
+				binding.totalDurationText.text = totalD
 			} else {
 				binding.totalDurationText.text = (0).toString()
+				duration = 0L
 			}
-			val totalDuration = binding.totalDurationText.text.toString().toLong()
+			val totalDuration = duration.toString().toLong()
 			val cal = totalDuration * 0.06
 
 			binding.totalCaloriesText.text = ((cal * 100.0).roundToInt() / 100.0).toString()
 
 		}
 
-		exModel.getExerciseData(ft.format(presentCal.time))
+		exModel.getExerciseData(ft.format(cal.time))
 		exModel.exDataList.observe(viewLifecycleOwner) {
 			binding.totalWorkoutsText.text = it.size.toString()
 
@@ -119,6 +133,14 @@ class ReportFragment : Fragment() {
 		}
 
 		super.onResume()
+	}
+
+	private fun getDur(it: List<DurationEntity>): Long {
+		var dur = 0L
+		for (i in it) {
+			dur += i.totalDuration
+		}
+		return dur
 	}
 
 	private fun getFinalList(it: List<ExercisesEntity>): ArrayList<ExercisesEntity> {
@@ -142,24 +164,24 @@ class ReportFragment : Fragment() {
 	private fun getCurrent(): ArrayList<String> {
 		val dates: ArrayList<String> = arrayListOf()
 
-		val temp = cal.time
+		val temp = weekCal.time
 
 		for (i in 0..6) {
-			dates.add(ft.format(cal.time))
-			cal.add(Calendar.DATE, 1)
+			dates.add(ft.format(weekCal.time))
+			weekCal.add(Calendar.DATE, 1)
 		}
 
-		cal.time = temp
+		weekCal.time = temp
 		return dates
 	}
 
 	private fun getNext(): ArrayList<String> {
-		cal.add(Calendar.DATE, +7)
+		weekCal.add(Calendar.DATE, +7)
 		return getCurrent()
 	}
 
 	private fun getPre(): ArrayList<String> {
-		cal.add(Calendar.DATE, -7)
+		weekCal.add(Calendar.DATE, -7)
 		return getCurrent()
 	}
 }

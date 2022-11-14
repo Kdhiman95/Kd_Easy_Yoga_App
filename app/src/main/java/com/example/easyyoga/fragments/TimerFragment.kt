@@ -4,11 +4,11 @@ import android.content.Context
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.speech.tts.TextToSpeech
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.ViewModelProvider
@@ -18,16 +18,19 @@ import com.example.easyyoga.R
 import com.example.easyyoga.databinding.FragmentTimerBinding
 import com.example.easyyoga.model.room_database.DurationEntity
 import com.example.easyyoga.model.room_database.ExercisesEntity
+import com.example.easyyoga.utils.Constant.Companion.cal
+import com.example.easyyoga.utils.Constant.Companion.entityPresentOrNot
+import com.example.easyyoga.utils.Constant.Companion.ft
 import com.example.easyyoga.utils.EasyYogaApplication
 import com.example.easyyoga.utils.Exercises
 import com.example.easyyoga.utils.ExercisesData.Companion.dailyList
-import com.example.easyyoga.utils.ExercisesData.Companion.totalDurationPerDay
+import com.example.easyyoga.utils.ExercisesData.Companion.levelDurationPerDay
+import com.example.easyyoga.utils.LevelsData.Companion.levelName
 import com.example.easyyoga.view_models.DurationViewModel
 import com.example.easyyoga.view_models.DurationViewModelFactory
 import com.example.easyyoga.view_models.ExerciseViewModel
 import com.example.easyyoga.view_models.ExerciseViewModelFactory
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import java.text.SimpleDateFormat
 import java.util.*
 
 class TimerFragment : Fragment() {
@@ -39,8 +42,6 @@ class TimerFragment : Fragment() {
 	private lateinit var durModel: DurationViewModel
 
 	private var exTimer: CountDownTimer? = null
-	private val cal = Calendar.getInstance()
-	private val ft = SimpleDateFormat("yyyy-MM-dd", Locale.US)
 
 	private var countEx = 0
 
@@ -91,22 +92,19 @@ class TimerFragment : Fragment() {
 	}
 
 	private fun setOrUpdateDuration() {
-		val pref = requireContext().getSharedPreferences("UserData", AppCompatActivity.MODE_PRIVATE)
-		val editor = pref.edit()
-		editor.putLong("totalDurationPerDay", totalDurationPerDay)
-		editor.apply()
-		durModel.getDuration(ft.format(cal.time))
-		durModel.durList.observe(viewLifecycleOwner) {
-			if (it.isEmpty()) {
-				val dur = DurationEntity(
-					0,
-					ft.format(cal.time),
-					totalDurationPerDay
-				)
-				durModel.insertDuration(dur)
-			} else {
-				durModel.updateDuration(ft.format(cal.time), totalDurationPerDay)
-			}
+		Log.d("WWWWWW", "setOrUpdateDuration tt: $entityPresentOrNot")
+		if (entityPresentOrNot.isEmpty()) {
+			val dur = DurationEntity(
+				0,
+				ft.format(cal.time),
+				levelName,
+				levelDurationPerDay
+			)
+			Log.d("WWWWWW", "setOrUpdateDuration1: ${dur.totalDuration}")
+			durModel.insertDuration(dur)
+		} else {
+			durModel.updateDuration(ft.format(cal.time), levelDurationPerDay, levelName)
+			Log.d("WWWWWW", "setOrUpdateDuration2: $levelDurationPerDay")
 		}
 	}
 
@@ -147,13 +145,13 @@ class TimerFragment : Fragment() {
 				binding.timerProgress.max = dailyList[index].duration.toInt()
 				exTimer = object : CountDownTimer(dailyList[index].duration * 1000, 1000) {
 					override fun onTick(miliTime: Long) {
-						totalDurationPerDay++
+						levelDurationPerDay++
 						val seconds = miliTime / 1000
 						binding.timerText.text = (seconds).toString()
 						binding.timerProgress.progress = (seconds).toInt()
 						if (seconds == (dailyList[index].duration / 2)) {
 							val halfTimeText = "Half time"
-//							speakText(halfTimeText, context)
+							speakText(halfTimeText, context)
 						}
 					}
 
@@ -177,7 +175,7 @@ class TimerFragment : Fragment() {
 			if (it == TextToSpeech.SUCCESS) {
 				tts.language = Locale.US
 				tts.setSpeechRate(1.0f)
-				tts.speak(text, TextToSpeech.QUEUE_ADD, null,"")
+				tts.speak(text, TextToSpeech.QUEUE_ADD, null, "")
 			}
 		}
 	}

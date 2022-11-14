@@ -8,6 +8,8 @@ class ExercisesData {
 	companion object{
 		var totalDurationPerDay = 0L
 
+		var levelDurationPerDay = 0L
+
 		var dailyList = ArrayList<Exercises>()
 
 		val beginnerPlanList = ArrayList<Exercises>()

@@ -20,8 +20,8 @@ class LevelAdapter(
 
 	inner class LevelViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
-		val levelText: TextView
-		val levelImage: ImageView
+		private val levelText: TextView
+		private val levelImage: ImageView
 
 		init {
 			levelText = view.findViewById(R.id.levelText)

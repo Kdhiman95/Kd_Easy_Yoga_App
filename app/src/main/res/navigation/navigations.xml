@@ -12,7 +12,9 @@
         tools:layout="@layout/fragment_home">
         <action
             android:id="@+id/action_homeFragment_to_daysFragment"
-            app:destination="@id/daysFragment" />
+            app:destination="@id/daysFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_in_left" />
     </fragment>
     <fragment
         android:id="@+id/reportFragment"
@@ -31,7 +33,11 @@
         tools:layout="@layout/fragment_days">
         <action
             android:id="@+id/action_daysFragment_to_perDayExercisesFragment"
-            app:destination="@id/perDayExercisesFragment" />
+            app:destination="@id/perDayExercisesFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/fade_out"
+            app:popEnterAnim="@android:anim/fade_in"
+            app:popExitAnim="@android:anim/slide_out_right" />
     </fragment>
     <fragment
         android:id="@+id/perDayExercisesFragment"
@@ -40,10 +46,18 @@
         tools:layout="@layout/fragment_per_day_exercises">
         <action
             android:id="@+id/action_perDayExercisesFragment_to_exerciseFragment"
-            app:destination="@id/exerciseFragment" />
+            app:destination="@id/exerciseFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/fade_out"
+            app:popEnterAnim="@android:anim/fade_in"
+            app:popExitAnim="@android:anim/slide_out_right" />
         <action
             android:id="@+id/action_perDayExercisesFragment_to_timerFragment"
-            app:destination="@id/timerFragment" />
+            app:destination="@id/timerFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/fade_out"
+            app:popEnterAnim="@android:anim/fade_in"
+            app:popExitAnim="@android:anim/slide_out_right" />
     </fragment>
     <fragment
         android:id="@+id/exerciseFragment"
@@ -58,6 +72,10 @@
         <action
             android:id="@+id/action_timerFragment_to_homeFragment"
             app:destination="@id/homeFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/fade_out"
+            app:popEnterAnim="@android:anim/fade_in"
+            app:popExitAnim="@android:anim/slide_out_right"
             app:popUpTo="@id/homeFragment" />
     </fragment>
 </navigation>

@@ -8,5 +8,6 @@ data class DurationEntity(
 	@PrimaryKey(autoGenerate = true)
 	val id :Int = 1,
 	val date: String,
+	val levelName : String,
 	var totalDuration: Long,
 )

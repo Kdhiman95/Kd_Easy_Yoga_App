@@ -1,5 +1,6 @@
 package com.example.easyyoga.view_models
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -20,6 +21,14 @@ class DurationViewModel(private val repository: EasyYogaRepository) : ViewModel(
 	val durList: LiveData<List<DurationEntity>>
 		get() = durMutableList
 
+	private val levelDurMutableList = MutableLiveData<List<DurationEntity>>()
+	val levelDurList: LiveData<List<DurationEntity>>
+		get() = levelDurMutableList
+
+	private val mutableNoOfDays = MutableLiveData<List<DurationEntity>>()
+	val noOfDay: LiveData<List<DurationEntity>>
+		get() = mutableNoOfDays
+
 	init {
 		getDuration(ft.format(cal.time))
 	}
@@ -30,15 +39,28 @@ class DurationViewModel(private val repository: EasyYogaRepository) : ViewModel(
 		}
 	}
 
-	fun updateDuration(date: String, dur: Long) {
+	fun updateDuration(date: String, dur: Long, level: String) {
 		viewModelScope.launch(IO) {
-			repository.updateDuration(date, dur)
+			repository.updateDuration(date, dur, level)
 		}
 	}
 
 	fun getDuration(date: String) {
 		viewModelScope.launch(IO) {
 			durMutableList.postValue(repository.getDuration(date))
+		}
+	}
+
+	fun getLevelDuration(date: String, level: String) {
+		viewModelScope.launch(IO) {
+			levelDurMutableList.postValue(repository.getLevelDuration(date, level))
+			Log.d("WWWWWW", "k ${levelDurList.value}")
+		}
+	}
+
+	fun getNoOfDays(level: String) {
+		viewModelScope.launch {
+			mutableNoOfDays.postValue(repository.getNoOfDays(level))
 		}
 	}
 }

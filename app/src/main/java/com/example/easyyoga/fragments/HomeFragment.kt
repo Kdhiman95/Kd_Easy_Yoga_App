@@ -12,23 +12,18 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.easyyoga.adapters.LevelAdapter
 import com.example.easyyoga.databinding.FragmentHomeBinding
+import com.example.easyyoga.utils.Constant.Companion.cal
+import com.example.easyyoga.utils.Constant.Companion.ft
 import com.example.easyyoga.utils.EasyYogaApplication
 import com.example.easyyoga.utils.ExercisesData.Companion.totalDurationPerDay
 import com.example.easyyoga.utils.LevelsData.Companion.levelsList
-import com.example.easyyoga.view_models.DurationViewModelFactory
 import com.example.easyyoga.view_models.DurationViewModel
-import com.example.easyyoga.view_models.ExerciseViewModel
-import com.example.easyyoga.view_models.ExerciseViewModelFactory
-import java.text.SimpleDateFormat
-import java.util.*
+import com.example.easyyoga.view_models.DurationViewModelFactory
 
 class HomeFragment : Fragment() {
 
-	private lateinit var durModel: DurationViewModel
 	private lateinit var binding: FragmentHomeBinding
-
-	private val cal = Calendar.getInstance()
-	private val ft = SimpleDateFormat("yyyy-MM-dd", Locale.US)
+	private lateinit var durModel: DurationViewModel
 
 	override fun onCreateView(
 		inflater: LayoutInflater, container: ViewGroup?,
@@ -38,7 +33,8 @@ class HomeFragment : Fragment() {
 		binding = FragmentHomeBinding.inflate(inflater, container, false)
 
 		val repo = ((activity as FragmentActivity).application as EasyYogaApplication).repository
-		durModel = ViewModelProvider(this,DurationViewModelFactory(repo))[DurationViewModel::class.java]
+		durModel =
+			ViewModelProvider(this, DurationViewModelFactory(repo))[DurationViewModel::class.java]
 
 		val pref = requireContext().getSharedPreferences("UserData", AppCompatActivity.MODE_PRIVATE)
 		val editor = pref.edit()
@@ -60,10 +56,10 @@ class HomeFragment : Fragment() {
 
 	override fun onResume() {
 		durModel.getDuration(ft.format(cal.time))
-		durModel.durList.observe(viewLifecycleOwner){
-			totalDurationPerDay = if(it.isNotEmpty()) {
+		durModel.durList.observe(viewLifecycleOwner) {
+			totalDurationPerDay = if (it.isNotEmpty()) {
 				var dur = 0L
-				for(i in it){
+				for (i in it) {
 					dur += i.totalDuration
 				}
 				dur

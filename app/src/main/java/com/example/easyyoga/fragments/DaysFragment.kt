@@ -1,20 +1,31 @@
 package com.example.easyyoga.fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.easyyoga.adapters.DaysAdapter
 import com.example.easyyoga.databinding.FragmentDaysBinding
+import com.example.easyyoga.utils.Constant.Companion.cal
+import com.example.easyyoga.utils.Constant.Companion.entityPresentOrNot
+import com.example.easyyoga.utils.Constant.Companion.ft
+import com.example.easyyoga.utils.EasyYogaApplication
+import com.example.easyyoga.utils.ExercisesData.Companion.levelDurationPerDay
 import com.example.easyyoga.utils.LevelsData.Companion.levelImg
 import com.example.easyyoga.utils.LevelsData.Companion.levelName
+import com.example.easyyoga.view_models.DurationViewModel
+import com.example.easyyoga.view_models.DurationViewModelFactory
 
 class DaysFragment : Fragment() {
 
 	private lateinit var binding: FragmentDaysBinding
+	private lateinit var durModel: DurationViewModel
 
 	override fun onCreateView(
 		inflater: LayoutInflater, container: ViewGroup?,
@@ -26,21 +37,42 @@ class DaysFragment : Fragment() {
 		binding.daysFragmentImage.setImageResource(levelImg)
 		binding.daysFragmentToolbar.title = levelName
 
+		val repo = ((activity as FragmentActivity).application as EasyYogaApplication).repository
+
+		durModel = ViewModelProvider(this,DurationViewModelFactory(repo))[DurationViewModel::class.java]
+
 		binding.daysFragmentRecV.layoutManager =
 			LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+
+		durModel.getLevelDuration(ft.format(cal.time), levelName)
+		durModel.levelDurList.observe(viewLifecycleOwner) {
+			Log.d("WWWWWW", "onCreateView: $it")
+			levelDurationPerDay = if(it.isNotEmpty()){
+				entityPresentOrNot = it
+				it[0].totalDuration
+			} else {
+				0L
+			}
+			Log.d("WWWWWW", "onCreateView: $levelDurationPerDay")
+		}
+
+		durModel.getNoOfDays(levelName)
 
 		return binding.root
 	}
 
 	override fun onResume() {
-		binding.daysFragmentRecV.adapter = DaysAdapter(getDaysList(), findNavController())
+		durModel.noOfDay.observe(viewLifecycleOwner){
+			Log.d("WWWWWW", "onResume: ${it.size}")
+			binding.daysFragmentRecV.adapter = DaysAdapter(getDaysList(),it.size, findNavController())
+		}
 		super.onResume()
 	}
 
-	private fun getDaysList(): ArrayList<String> {
-		val list = arrayListOf<String>()
+	private fun getDaysList(): ArrayList<Int> {
+		val list = arrayListOf<Int>()
 		for (day in 1..30) {
-			list.add("Day $day")
+			list.add(day)
 		}
 		return list
 	}
