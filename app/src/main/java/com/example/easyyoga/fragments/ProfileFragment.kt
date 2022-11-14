@@ -51,6 +51,7 @@ class ProfileFragment : Fragment() {
 		binding.heightEdit.setOnClickListener {
 			val dialog = Dialog(requireContext())
 			dialog.setContentView(R.layout.height_dialog_box)
+
 			val feet = dialog.findViewById<TextInputEditText>(R.id.dialogFeetText)
 			val inch = dialog.findViewById<TextInputEditText>(R.id.dialogInchText)
 			val saveBtn = dialog.findViewById<MaterialButton>(R.id.dialogHeightSaveBtn)

@@ -3,11 +3,10 @@
     android:layout_width="400dp"
     android:layout_height="wrap_content"
     android:layout_gravity="center"
-    android:backgroundTint="@color/gray"
     android:background="@color/gray"
+    android:backgroundTint="@color/gray"
     android:orientation="vertical"
     android:padding="20dp">
-
 
     <com.google.android.material.textview.MaterialTextView
         android:layout_width="match_parent"
@@ -39,6 +38,5 @@
         android:layout_gravity="end"
         android:layout_marginTop="10dp"
         android:text="@string/save" />
-
 
 </LinearLayout>

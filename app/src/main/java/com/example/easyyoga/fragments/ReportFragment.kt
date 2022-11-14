@@ -1,5 +1,6 @@
 package com.example.easyyoga.fragments
 
+import android.content.Context
 import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -74,30 +75,10 @@ class ReportFragment : Fragment() {
 	}
 
 	override fun onResume() {
-		val pref = requireContext().getSharedPreferences("UserData", AppCompatActivity.MODE_PRIVATE)
-
-		val weight = pref.getString("weight", null)!!.toFloat()
-		val feet = pref.getString("heightFeet", null)!!.toFloat()
-		val inch = pref.getString("heightIn", null)!!.toFloat()
-
-		val finalInch = (feet * 12) + inch
-
-		val heightM = (finalInch * 2.54) / 100
-
-		val bmi = (weight / (heightM * heightM))
-
-		binding.bmiText.text = ((bmi * 100.0).roundToInt() / 100.0).toString()
-
-		if (bmi <= 18.5)
-			binding.bmiText.setTextColor(Color.BLUE)
-		else if (bmi >= 25)
-			binding.bmiText.setTextColor(Color.RED)
-		else
-			binding.bmiText.setTextColor(Color.GREEN)
-
+		setBmi(requireContext())
 
 		durModel.getDuration(ft.format(cal.time))
-		var duration = 0L
+		var duration : Long
 		durModel.durList.observe(viewLifecycleOwner) {
 			if (it.isNotEmpty()) {
 				duration = getDur(it)
@@ -133,6 +114,29 @@ class ReportFragment : Fragment() {
 		}
 
 		super.onResume()
+	}
+
+	private fun setBmi(requireContext: Context) {
+		val pref = requireContext.getSharedPreferences("UserData", AppCompatActivity.MODE_PRIVATE)
+
+		val weight = pref.getString("weight", null)!!.toFloat()
+		val feet = pref.getString("heightFeet", null)!!.toFloat()
+		val inch = pref.getString("heightIn", null)!!.toFloat()
+
+		val finalInch = (feet * 12) + inch
+
+		val heightM = (finalInch * 2.54) / 100
+
+		val bmi = (weight / (heightM * heightM))
+
+		binding.bmiText.text = ((bmi * 100.0).roundToInt() / 100.0).toString()
+
+		if (bmi <= 18.5)
+			binding.bmiText.setTextColor(Color.BLUE)
+		else if (bmi >= 25)
+			binding.bmiText.setTextColor(Color.RED)
+		else
+			binding.bmiText.setTextColor(Color.GREEN)
 	}
 
 	private fun getDur(it: List<DurationEntity>): Long {

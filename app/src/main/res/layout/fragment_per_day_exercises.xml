@@ -15,8 +15,8 @@
         <com.google.android.material.appbar.CollapsingToolbarLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:contentScrim="@color/gray"
             android:background="@android:color/transparent"
+            app:contentScrim="@color/gray"
             app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -33,9 +33,9 @@
                     android:src="@drawable/home_image"
                     android:tint="@color/level_color"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
                     tools:ignore="UseAppTint" />
 
                 <TextView
@@ -59,11 +59,11 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="20dp"
+                    android:layout_marginBottom="20dp"
                     android:text="@string/app_name"
                     android:textAlignment="textEnd"
                     android:textColor="@color/white"
                     android:textSize="15sp"
-                    android:layout_marginBottom="20dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
@@ -74,7 +74,7 @@
             <androidx.appcompat.widget.Toolbar
                 android:layout_width="match_parent"
                 android:layout_height="20dp"
-                app:layout_collapseMode="pin"/>
+                app:layout_collapseMode="pin" />
 
         </com.google.android.material.appbar.CollapsingToolbarLayout>
 
@@ -83,9 +83,9 @@
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@drawable/home_background"
         android:fadingEdgeLength="20dp"
         android:requiresFadingEdge="vertical"
-        android:background="@drawable/home_background"
         app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
 
         <LinearLayout
@@ -95,15 +95,15 @@
 
             <ImageView
                 android:id="@+id/restImageView"
-                android:layout_gravity="center"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:minWidth="100dp"
-                android:src="@drawable/ic_baseline_coffee_24"
+                android:layout_gravity="center"
                 android:layout_marginTop="100dp"
-                android:visibility="gone"
+                android:contentDescription="@string/rest"
+                android:minWidth="100dp"
                 android:minHeight="100dp"
-                android:contentDescription="@string/rest" />
+                android:src="@drawable/ic_baseline_coffee_24"
+                android:visibility="gone" />
 
             <TextView
                 android:id="@+id/restTextView"
@@ -114,16 +114,16 @@
                 android:textColor="@color/dark_gray"
                 android:textSize="20sp"
                 android:textStyle="bold"
-                android:visibility="gone"/>
+                android:visibility="gone" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/perDayRecV"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
-                tools:listitem="@layout/exercise_layout"/>
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:listitem="@layout/exercise_layout" />
 
         </LinearLayout>
 
@@ -133,9 +133,9 @@
         android:id="@+id/exerciseStartButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="20sp"
-        android:text="@string/start"
+        android:layout_gravity="bottom"
         android:layout_margin="20dp"
-        android:layout_gravity="bottom"/>
+        android:text="@string/start"
+        android:textSize="20sp" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

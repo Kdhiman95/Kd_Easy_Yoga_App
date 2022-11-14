@@ -35,6 +35,7 @@ class DaysAdapter(
 
 			if (day % 5 == 0) {
 				restImg.visibility = View.VISIBLE
+				startBtn.visibility = View.GONE
 			} else {
 				restImg.visibility = View.GONE
 			}
@@ -58,7 +59,7 @@ class DaysAdapter(
 
 	override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DayViewHolder {
 		val view =
-			LayoutInflater.from(parent.context).inflate(R.layout.excerice_item, parent, false)
+			LayoutInflater.from(parent.context).inflate(R.layout.exercise_item, parent, false)
 		return DayViewHolder(view)
 	}
 

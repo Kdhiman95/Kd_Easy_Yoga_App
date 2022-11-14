@@ -15,7 +15,6 @@ import com.example.easyyoga.databinding.FragmentHomeBinding
 import com.example.easyyoga.utils.Constant.Companion.cal
 import com.example.easyyoga.utils.Constant.Companion.ft
 import com.example.easyyoga.utils.EasyYogaApplication
-import com.example.easyyoga.utils.ExercisesData.Companion.totalDurationPerDay
 import com.example.easyyoga.utils.LevelsData.Companion.levelsList
 import com.example.easyyoga.view_models.DurationViewModel
 import com.example.easyyoga.view_models.DurationViewModelFactory
@@ -37,11 +36,11 @@ class HomeFragment : Fragment() {
 			ViewModelProvider(this, DurationViewModelFactory(repo))[DurationViewModel::class.java]
 
 		val pref = requireContext().getSharedPreferences("UserData", AppCompatActivity.MODE_PRIVATE)
-		val editor = pref.edit()
 
 		if (pref.getString("Weight", "")!!.isEmpty() && pref.getString("heightFeet", "")!!
 				.isEmpty() && pref.getString("heightIn", "")!!.isEmpty()
 		) {
+			val editor = pref.edit()
 			editor.putString("weight", "58")
 			editor.putString("heightFeet", "5")
 			editor.putString("heightIn", "7")
@@ -55,18 +54,6 @@ class HomeFragment : Fragment() {
 	}
 
 	override fun onResume() {
-		durModel.getDuration(ft.format(cal.time))
-		durModel.durList.observe(viewLifecycleOwner) {
-			totalDurationPerDay = if (it.isNotEmpty()) {
-				var dur = 0L
-				for (i in it) {
-					dur += i.totalDuration
-				}
-				dur
-			} else {
-				0L
-			}
-		}
 		binding.homeFragmentRecV.adapter = LevelAdapter(levelsList, findNavController())
 		super.onResume()
 	}

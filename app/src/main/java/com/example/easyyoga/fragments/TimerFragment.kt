@@ -4,7 +4,6 @@ import android.content.Context
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.speech.tts.TextToSpeech
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -92,7 +91,6 @@ class TimerFragment : Fragment() {
 	}
 
 	private fun setOrUpdateDuration() {
-		Log.d("WWWWWW", "setOrUpdateDuration tt: $entityPresentOrNot")
 		if (entityPresentOrNot.isEmpty()) {
 			val dur = DurationEntity(
 				0,
@@ -100,11 +98,9 @@ class TimerFragment : Fragment() {
 				levelName,
 				levelDurationPerDay
 			)
-			Log.d("WWWWWW", "setOrUpdateDuration1: ${dur.totalDuration}")
 			durModel.insertDuration(dur)
 		} else {
 			durModel.updateDuration(ft.format(cal.time), levelDurationPerDay, levelName)
-			Log.d("WWWWWW", "setOrUpdateDuration2: $levelDurationPerDay")
 		}
 	}
 

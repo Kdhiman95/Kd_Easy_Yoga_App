@@ -1,13 +1,10 @@
 package com.example.easyyoga.utils
 
 import com.example.easyyoga.R
-import java.time.Duration
 
 class ExercisesData {
 
-	companion object{
-		var totalDurationPerDay = 0L
-
+	companion object {
 		var levelDurationPerDay = 0L
 
 		var dailyList = ArrayList<Exercises>()
@@ -15,14 +12,6 @@ class ExercisesData {
 		val beginnerPlanList = ArrayList<Exercises>()
 		val intermediatePlanList = ArrayList<Exercises>()
 		val advancedPlanList = ArrayList<Exercises>()
-
-		fun updateListDuration(plan: String,position:Int,duration: Long){
-			when(plan){
-				"Beginner plan" -> beginnerPlanList[position].duration = duration
-				"Intermediate plan" -> intermediatePlanList[position].duration = duration
-				"Advanced plan" -> advancedPlanList[position].duration = duration
-			}
-		}
 
 		fun addBeginnerPlanList() {
 			beginnerPlanList.add(Exercises(1,

@@ -60,7 +60,7 @@
             android:id="@+id/daysFragmentRecV"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            tools:listitem="@layout/excerice_item" />
+            tools:listitem="@layout/exercise_item" />
 
     </androidx.core.widget.NestedScrollView>
 

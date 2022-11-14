@@ -1,7 +1,6 @@
 package com.example.easyyoga.fragments
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -39,21 +38,20 @@ class DaysFragment : Fragment() {
 
 		val repo = ((activity as FragmentActivity).application as EasyYogaApplication).repository
 
-		durModel = ViewModelProvider(this,DurationViewModelFactory(repo))[DurationViewModel::class.java]
+		durModel =
+			ViewModelProvider(this, DurationViewModelFactory(repo))[DurationViewModel::class.java]
 
 		binding.daysFragmentRecV.layoutManager =
 			LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
 
 		durModel.getLevelDuration(ft.format(cal.time), levelName)
 		durModel.levelDurList.observe(viewLifecycleOwner) {
-			Log.d("WWWWWW", "onCreateView: $it")
-			levelDurationPerDay = if(it.isNotEmpty()){
+			levelDurationPerDay = if (it.isNotEmpty()) {
 				entityPresentOrNot = it
 				it[0].totalDuration
 			} else {
 				0L
 			}
-			Log.d("WWWWWW", "onCreateView: $levelDurationPerDay")
 		}
 
 		durModel.getNoOfDays(levelName)
@@ -62,9 +60,9 @@ class DaysFragment : Fragment() {
 	}
 
 	override fun onResume() {
-		durModel.noOfDay.observe(viewLifecycleOwner){
-			Log.d("WWWWWW", "onResume: ${it.size}")
-			binding.daysFragmentRecV.adapter = DaysAdapter(getDaysList(),it.size, findNavController())
+		durModel.noOfDay.observe(viewLifecycleOwner) {
+			binding.daysFragmentRecV.adapter =
+				DaysAdapter(getDaysList(), it.size, findNavController())
 		}
 		super.onResume()
 	}

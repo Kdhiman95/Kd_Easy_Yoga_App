@@ -36,10 +36,10 @@
                 android:id="@+id/dayItemText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
                 android:text="@string/app_name"
                 android:textSize="20sp"
                 android:textStyle="bold"
-                android:layout_marginStart="5dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toRightOf="@id/dayText"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -58,14 +58,14 @@
                 android:id="@+id/restImageView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:minHeight="50dp"
+                android:contentDescription="@string/rest"
                 android:minWidth="50dp"
-                android:visibility="gone"
+                android:minHeight="50dp"
                 android:src="@drawable/ic_baseline_coffee_24"
-                app:layout_constraintTop_toTopOf="parent"
+                android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                android:contentDescription="@string/rest" />
+                app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -1,6 +1,5 @@
 package com.example.easyyoga.view_models
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -54,7 +53,6 @@ class DurationViewModel(private val repository: EasyYogaRepository) : ViewModel(
 	fun getLevelDuration(date: String, level: String) {
 		viewModelScope.launch(IO) {
 			levelDurMutableList.postValue(repository.getLevelDuration(date, level))
-			Log.d("WWWWWW", "k ${levelDurList.value}")
 		}
 	}
 

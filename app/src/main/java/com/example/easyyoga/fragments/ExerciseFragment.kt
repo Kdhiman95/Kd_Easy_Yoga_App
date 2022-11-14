@@ -56,22 +56,27 @@ class ExerciseFragment : Fragment() {
 		}
 
 		binding.saveBtn.setOnClickListener {
-			val dur = (binding.exerciseDuration.text as String).toLong()
-			when (levelName) {
-				"Beginner plan" -> {
-					beginnerPlanList[exerciseId - 1].duration = dur
-				}
-				"Intermediate plan" -> {
-					intermediatePlanList[exerciseId - 1].duration = dur
-				}
-				"Advanced plan" -> {
-					advancedPlanList[exerciseId - 1].duration = dur
-				}
-			}
+			val dur = updateDurationExercise()
 			setSaveVisibility(dur)
 		}
 
 		return binding.root
+	}
+
+	private fun updateDurationExercise(): Long {
+		val dur = (binding.exerciseDuration.text as String).toLong()
+		when (levelName) {
+			"Beginner plan" -> {
+				beginnerPlanList[exerciseId - 1].duration = dur
+			}
+			"Intermediate plan" -> {
+				intermediatePlanList[exerciseId - 1].duration = dur
+			}
+			"Advanced plan" -> {
+				advancedPlanList[exerciseId - 1].duration = dur
+			}
+		}
+		return dur
 	}
 
 	private fun setSaveVisibility(duration: Long) {
