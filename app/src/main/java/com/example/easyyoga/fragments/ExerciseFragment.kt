@@ -17,6 +17,7 @@ class ExerciseFragment : Fragment() {
 	private lateinit var binding: FragmentExerciseBinding
 
 	private var exerciseId = 0
+	private var index = 0
 
 	override fun onCreateView(
 		inflater: LayoutInflater, container: ViewGroup?,
@@ -39,8 +40,15 @@ class ExerciseFragment : Fragment() {
 
 		binding.exerciseDetail.text = detail
 
+		//finding exercise index for updating exercise duration
+		index = when (exerciseId) {
+			20,30-> 10
+			in 11..30 -> exerciseId % 10
+			else -> exerciseId
+		}
+
 		binding.plusDurationBtn.setOnClickListener {
-			if(duration<120) {
+			if (duration < 120) {
 				duration += 5L
 			}
 			binding.exerciseDuration.text = duration.toString()
@@ -48,7 +56,7 @@ class ExerciseFragment : Fragment() {
 		}
 
 		binding.minusDurationBtn.setOnClickListener {
-			if(duration>0) {
+			if (duration > 0) {
 				duration -= 5L
 			}
 			binding.exerciseDuration.text = duration.toString()
@@ -67,13 +75,13 @@ class ExerciseFragment : Fragment() {
 		val dur = (binding.exerciseDuration.text as String).toLong()
 		when (levelName) {
 			"Beginner plan" -> {
-				beginnerPlanList[exerciseId - 1].duration = dur
+				beginnerPlanList[index - 1].duration = dur
 			}
 			"Intermediate plan" -> {
-				intermediatePlanList[exerciseId - 1].duration = dur
+				intermediatePlanList[index - 1].duration = dur
 			}
 			"Advanced plan" -> {
-				advancedPlanList[exerciseId - 1].duration = dur
+				advancedPlanList[index - 1].duration = dur
 			}
 		}
 		return dur
@@ -86,7 +94,7 @@ class ExerciseFragment : Fragment() {
 			"Advanced plan" -> advancedPlanList
 			else -> ArrayList()
 		}
-		if (duration == list[exerciseId - 1].duration) {
+		if (duration == list[index - 1].duration) {
 			binding.saveBtn.visibility = View.GONE
 		} else {
 			binding.saveBtn.visibility = View.VISIBLE

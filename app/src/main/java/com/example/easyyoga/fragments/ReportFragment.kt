@@ -84,7 +84,7 @@ class ReportFragment : Fragment() {
 				duration = getDur(it)
 				val min = duration / 60
 				val sec = duration % 60
-				val totalD = "$min min $sec s"
+				val totalD = "$min m $sec s"
 				binding.totalDurationText.text = totalD
 			} else {
 				binding.totalDurationText.text = (0).toString()

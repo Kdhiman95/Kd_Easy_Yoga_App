@@ -12,8 +12,6 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.easyyoga.adapters.LevelAdapter
 import com.example.easyyoga.databinding.FragmentHomeBinding
-import com.example.easyyoga.utils.Constant.Companion.cal
-import com.example.easyyoga.utils.Constant.Companion.ft
 import com.example.easyyoga.utils.EasyYogaApplication
 import com.example.easyyoga.utils.LevelsData.Companion.levelsList
 import com.example.easyyoga.view_models.DurationViewModel
