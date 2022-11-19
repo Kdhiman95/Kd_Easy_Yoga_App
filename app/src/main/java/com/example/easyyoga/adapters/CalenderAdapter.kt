@@ -44,7 +44,7 @@ class CalenderAdapter(
 	}
 
 	private val days: ArrayList<String> =
-		arrayListOf("SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT")
+		arrayListOf("S", "M", "T", "W", "T", "F", "S")
 
 	inner class DateViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 

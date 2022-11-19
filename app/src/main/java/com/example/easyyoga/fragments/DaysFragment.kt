@@ -62,7 +62,7 @@ class DaysFragment : Fragment() {
 	override fun onResume() {
 		durModel.noOfDay.observe(viewLifecycleOwner) {
 			binding.daysFragmentRecV.adapter =
-				DaysAdapter(getDaysList(), it.size, findNavController())
+				DaysAdapter(getDaysList(), it.size,durModel, findNavController(),requireContext())
 		}
 		super.onResume()
 	}

@@ -4,6 +4,7 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
@@ -24,6 +25,10 @@ class ExerciseAdapter(private val list: List<ExercisesEntity>, private val conte
 			image = view.findViewById(R.id.exerciseImageView)
 			exerciseName = view.findViewById(R.id.exerciseName)
 			exerciseDuration = view.findViewById(R.id.exerciseDuration)
+
+			val anim = AnimationUtils.loadAnimation(context, androidx.appcompat.R.anim.abc_slide_in_bottom)
+			anim.duration = 1000
+			view.startAnimation(anim)
 		}
 
 		fun bind(ex : ExercisesEntity) {

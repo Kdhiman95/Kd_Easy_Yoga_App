@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:id="@+id/navigationFragmentLayout"
     tools:context=".fragments.NavigationFragment">
 
     <androidx.fragment.app.FragmentContainerView
@@ -22,7 +23,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
         android:backgroundTint="@android:color/transparent"
-        android:layout_margin="10dp"
         android:background="@drawable/navbar_background"
         app:itemIconTint="@drawable/selected_item"
         app:itemTextColor="@drawable/selected_item"

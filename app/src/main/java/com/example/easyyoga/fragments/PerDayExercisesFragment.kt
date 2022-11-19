@@ -71,7 +71,8 @@ class PerDayExercisesFragment : Fragment() {
 			binding.perDayRecV.visibility = View.VISIBLE
 			binding.exerciseStartButton.visibility = View.VISIBLE
 			dailyList = list
-			binding.perDayRecV.adapter = PerDayExercisesAdapter(list, this, findNavController())
+			binding.perDayRecV.adapter =
+				PerDayExercisesAdapter(list, this, findNavController(), requireContext())
 		}
 
 		super.onResume()

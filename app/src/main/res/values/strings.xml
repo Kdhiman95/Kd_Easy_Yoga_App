@@ -31,9 +31,23 @@
     <string name="rest">Rest</string>
     <string name="feets">Feets</string>
     <string name="inches">Inches</string>
-    <string name="bmi">BMI</string>
+    <string name="bmi">BMI:</string>
     <string name="bmitext">bmitext</string>
     <string name="_1">0</string>
     <string name="sun">Sun</string>
     <string name="day">Day</string>
+    <string name="plans">Plans</string>
+    <string name="duration2">Duration</string>
+    <string name="cal">Kcal</string>
+    <string name="get_started">Get Started</string>
+    <string name="enter_your_name">Enter your name</string>
+    <string name="enter_your_daily_calories_goal">Enter your daily calories goal</string>
+    <string name="enter_your_weight_and_height">Enter your Weight and height</string>
+    <string name="all_done">All Done</string>
+    <string name="sign_out">Sign out</string>
+    <string name="unit">unit</string>
+    <string name="title">Title</string>
+    <string name="hint">hint</string>
+    <string name="daily_goals">Daily goals</string>
+    <string name="weight_amp_height"><![CDATA[Weight & Height]]></string>
 </resources>

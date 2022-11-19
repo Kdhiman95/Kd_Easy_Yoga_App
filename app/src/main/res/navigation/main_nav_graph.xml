@@ -22,5 +22,11 @@
         android:id="@+id/navigationFragment"
         android:name="com.example.easyyoga.fragments.NavigationFragment"
         android:label="fragment_navigation"
-        tools:layout="@layout/fragment_navigation" />
+        tools:layout="@layout/fragment_navigation" >
+        <action
+            android:id="@+id/action_navigationFragment_to_splashFragment"
+            app:destination="@id/splashFragment"
+            app:popUpTo="@id/navigationFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
 </navigation>

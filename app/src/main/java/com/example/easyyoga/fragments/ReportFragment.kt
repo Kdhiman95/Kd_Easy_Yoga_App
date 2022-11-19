@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.easyyoga.adapters.CalenderAdapter
 import com.example.easyyoga.adapters.ExerciseAdapter
@@ -19,12 +20,14 @@ import com.example.easyyoga.model.room_database.ExercisesEntity
 import com.example.easyyoga.utils.Constant.Companion.cal
 import com.example.easyyoga.utils.Constant.Companion.ft
 import com.example.easyyoga.utils.EasyYogaApplication
+import com.example.easyyoga.utils.ProgressBarAnimation
 import com.example.easyyoga.view_models.DurationViewModel
 import com.example.easyyoga.view_models.DurationViewModelFactory
 import com.example.easyyoga.view_models.ExerciseViewModel
 import com.example.easyyoga.view_models.ExerciseViewModelFactory
 import java.util.*
 import kotlin.math.roundToInt
+
 
 class ReportFragment : Fragment() {
 
@@ -52,8 +55,7 @@ class ReportFragment : Fragment() {
 		weekCal.firstDayOfWeek = Calendar.SUNDAY
 		weekCal.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY)
 
-		binding.reportFragmentCalenderRecV.layoutManager =
-			LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+		binding.reportFragmentCalenderRecV.layoutManager = GridLayoutManager(requireContext(), 7)
 
 		binding.reportFragmentExerciseRecV.layoutManager =
 			LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
@@ -78,22 +80,35 @@ class ReportFragment : Fragment() {
 		setBmi(requireContext())
 
 		durModel.getDuration(ft.format(cal.time))
-		var duration : Long
+		var duration: Long
 		durModel.durList.observe(viewLifecycleOwner) {
 			if (it.isNotEmpty()) {
 				duration = getDur(it)
 				val min = duration / 60
 				val sec = duration % 60
-				val totalD = "$min m $sec s"
+				val totalD = if (min < 10 && sec < 10) {
+					"0$min:0$sec"
+				} else if (sec < 10) {
+					"$min:0$sec"
+				} else if (min < 10) {
+					"0$min:$sec"
+				} else {
+					"$min:$sec"
+				}
 				binding.totalDurationText.text = totalD
 			} else {
 				binding.totalDurationText.text = (0).toString()
 				duration = 0L
 			}
 			val totalDuration = duration.toString().toLong()
-			val cal = totalDuration * 0.06
+			val calories = totalDuration * 0.06
 
-			binding.totalCaloriesText.text = ((cal * 100.0).roundToInt() / 100.0).toString()
+			binding.totalCaloriesText.text = ((calories * 100.0).roundToInt() / 100.0).toString()
+
+			val anim = ProgressBarAnimation(binding.caloriesIndicator, 0F*100, calories.toFloat()*1000)
+			anim.duration = 1000
+
+			binding.caloriesIndicator.startAnimation(anim)
 
 		}
 
@@ -132,11 +147,13 @@ class ReportFragment : Fragment() {
 		binding.bmiText.text = ((bmi * 100.0).roundToInt() / 100.0).toString()
 
 		if (bmi <= 18.5)
-			binding.bmiText.setTextColor(Color.BLUE)
+			binding.bmiText.setTextColor(Color.parseColor("#00008B"))
 		else if (bmi >= 25)
-			binding.bmiText.setTextColor(Color.RED)
+			binding.bmiText.setTextColor(Color.parseColor("#8B0000"))
 		else
-			binding.bmiText.setTextColor(Color.GREEN)
+			binding.bmiText.setTextColor(Color.parseColor("#028745"))
+
+		binding.caloriesIndicator.max = pref.getString("calories", "5")!!.toInt() * 1000
 	}
 
 	private fun getDur(it: List<DurationEntity>): Long {

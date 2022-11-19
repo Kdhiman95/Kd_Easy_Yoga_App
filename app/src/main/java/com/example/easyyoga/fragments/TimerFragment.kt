@@ -44,6 +44,8 @@ class TimerFragment : Fragment() {
 
 	private var countEx = 0
 
+	private var i = 0
+
 	override fun onCreateView(
 		inflater: LayoutInflater, container: ViewGroup?,
 		savedInstanceState: Bundle?,
@@ -61,32 +63,61 @@ class TimerFragment : Fragment() {
 
 		binding.dailyProgressIndicator.max = dailyList.size
 
-		startTimer(0, requireContext())
+		startTimer(i, requireContext())
 
 		requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner,
 			object : OnBackPressedCallback(true) {
 				override fun handleOnBackPressed() {
-					val alertDialog = MaterialAlertDialogBuilder(requireContext())
-					alertDialog.setMessage("Are you  sure you want to Quit?")
-						.setCancelable(false)
-						.setPositiveButton("Yes") { _, _ ->
-							setOrUpdateDuration()
-							findNavController().navigate(R.id.action_timerFragment_to_homeFragment)
-						}
-						.setNegativeButton("No") { _, _ ->
-
-						}
-						.show()
+					showDialog(requireContext())
 				}
-
 			})
 
+		binding.backBtn.setOnClickListener {
+			showDialog(requireContext())
+		}
+
+		binding.timerFragmentNextBtn.setOnClickListener {
+			++i
+			if(i< dailyList.size){
+				restTimer.cancel()
+				exTimer?.cancel()
+				startTimer(i,requireContext())
+				binding.dailyProgressIndicator.progress = ++countEx
+			}
+			tts.stop()
+		}
+		binding.timerFragmentPreBtn.setOnClickListener {
+			--i
+			if(i>=0){
+				restTimer.cancel()
+				exTimer?.cancel()
+				startTimer(i,requireContext())
+				binding.dailyProgressIndicator.progress = --countEx
+			}
+			tts.stop()
+		}
+
 		return binding.root
+	}
+
+	private fun showDialog(context: Context){
+		val alertDialog = MaterialAlertDialogBuilder(context)
+		alertDialog.setMessage("Are you sure you want to Quit the exercise?")
+			.setCancelable(false)
+			.setPositiveButton("Yes") { _, _ ->
+				setOrUpdateDuration()
+				findNavController().navigate(R.id.action_timerFragment_to_homeFragment)
+			}
+			.setNegativeButton("No") { _, _ ->
+
+			}
+			.show()
 	}
 
 	override fun onDestroyView() {
 		restTimer.cancel()
 		exTimer?.cancel()
+		tts.stop()
 		super.onDestroyView()
 	}
 
@@ -152,6 +183,7 @@ class TimerFragment : Fragment() {
 					}
 
 					override fun onFinish() {
+						binding.dailyProgressIndicator.progress = countEx++
 						startTimer(index + 1, context)
 					}
 				}.start()
@@ -163,7 +195,6 @@ class TimerFragment : Fragment() {
 	private fun updateUi(exercise: Exercises) {
 		Glide.with(this).load(exercise.img).into(binding.timerImageView)
 		binding.exerciseNameText.text = exercise.exerciseName
-		binding.dailyProgressIndicator.progress = countEx++
 	}
 
 	private fun speakText(text: String, context: Context) {

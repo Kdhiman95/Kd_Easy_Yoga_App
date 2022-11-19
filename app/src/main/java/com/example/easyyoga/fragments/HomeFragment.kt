@@ -4,12 +4,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.GridLayoutManager
 import com.example.easyyoga.adapters.LevelAdapter
 import com.example.easyyoga.databinding.FragmentHomeBinding
 import com.example.easyyoga.utils.EasyYogaApplication
@@ -33,21 +32,8 @@ class HomeFragment : Fragment() {
 		durModel =
 			ViewModelProvider(this, DurationViewModelFactory(repo))[DurationViewModel::class.java]
 
-		val pref = requireContext().getSharedPreferences("UserData", AppCompatActivity.MODE_PRIVATE)
-
-		if (pref.getString("Weight", "")!!.isEmpty() && pref.getString("heightFeet", "")!!
-				.isEmpty() && pref.getString("heightIn", "")!!.isEmpty()
-		) {
-			val editor = pref.edit()
-			editor.putString("weight", "58")
-			editor.putString("heightFeet", "5")
-			editor.putString("heightIn", "7")
-			editor.apply()
-		}
-
 		binding.homeFragmentRecV.layoutManager =
-			LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
-
+			GridLayoutManager(requireContext(), 1, GridLayoutManager.HORIZONTAL, false)
 		return binding.root
 	}
 

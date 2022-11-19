@@ -25,7 +25,8 @@
         android:id="@+id/profileFragment"
         android:name="com.example.easyyoga.fragments.ProfileFragment"
         android:label="fragment_profile"
-        tools:layout="@layout/fragment_profile" />
+        tools:layout="@layout/fragment_profile" >
+    </fragment>
     <fragment
         android:id="@+id/daysFragment"
         android:name="com.example.easyyoga.fragments.DaysFragment"
@@ -54,10 +55,8 @@
         <action
             android:id="@+id/action_perDayExercisesFragment_to_timerFragment"
             app:destination="@id/timerFragment"
-            app:enterAnim="@android:anim/slide_in_left"
-            app:exitAnim="@android:anim/fade_out"
-            app:popEnterAnim="@android:anim/fade_in"
-            app:popExitAnim="@android:anim/slide_out_right" />
+            app:enterAnim="@anim/slide_up"
+            app:popEnterAnim="@anim/pop_up" />
     </fragment>
     <fragment
         android:id="@+id/exerciseFragment"
@@ -72,10 +71,8 @@
         <action
             android:id="@+id/action_timerFragment_to_homeFragment"
             app:destination="@id/homeFragment"
-            app:enterAnim="@android:anim/slide_in_left"
-            app:exitAnim="@android:anim/fade_out"
-            app:popEnterAnim="@android:anim/fade_in"
-            app:popExitAnim="@android:anim/slide_out_right"
+            app:enterAnim="@anim/slide_down"
+            app:popEnterAnim="@anim/pop_down"
             app:popUpTo="@id/homeFragment" />
     </fragment>
 </navigation>
