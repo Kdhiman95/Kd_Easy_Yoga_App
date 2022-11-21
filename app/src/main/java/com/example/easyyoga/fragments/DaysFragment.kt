@@ -32,7 +32,11 @@ class DaysFragment : Fragment() {
 	): View {
 		// Inflate the layout for this fragment
 		binding = FragmentDaysBinding.inflate(inflater, container, false)
+		return binding.root
+	}
 
+	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+		super.onViewCreated(view, savedInstanceState)
 		binding.daysFragmentImage.setImageResource(levelImg)
 		binding.daysFragmentToolbar.title = levelName
 
@@ -56,15 +60,11 @@ class DaysFragment : Fragment() {
 
 		durModel.getNoOfDays(levelName)
 
-		return binding.root
-	}
-
-	override fun onResume() {
 		durModel.noOfDay.observe(viewLifecycleOwner) {
 			binding.daysFragmentRecV.adapter =
 				DaysAdapter(getDaysList(), it.size,durModel, findNavController(),requireContext())
 		}
-		super.onResume()
+
 	}
 
 	private fun getDaysList(): ArrayList<Int> {

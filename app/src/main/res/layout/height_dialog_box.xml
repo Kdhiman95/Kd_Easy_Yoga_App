@@ -1,69 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="300dp"
+    android:layout_width="325dp"
     android:layout_height="wrap_content"
     android:layout_gravity="center"
-    android:background="@color/gray"
-    android:backgroundTint="@color/gray"
+    android:background="@drawable/dialog_bg"
     android:orientation="vertical"
-    android:padding="20dp">
-
-    <com.google.android.material.textview.MaterialTextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/height"
-        android:textSize="30sp"
-        android:textStyle="bold" />
+    android:padding="5dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:baselineAligned="false">
+        android:gravity="center">
 
-        <com.google.android.material.textfield.TextInputLayout
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
-            android:layout_weight="1"
-            android:hint="@string/feets">
+            android:text="@string/height"
+            android:textSize="25sp"
+            android:textStyle="bold" />
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/dialogFeetText"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="15"
-                android:inputType="number"
-                android:textColor="@color/black" />
+        <NumberPicker
+            android:id="@+id/heightFtPicker"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp" />
 
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
-            android:layout_weight="1"
-            android:hint="@string/inches">
+            android:text="@string/ft"
+            android:textSize="25sp" />
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/dialogInchText"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="15"
-                android:inputType="number"
-                android:textColor="@color/black" />
+        <NumberPicker
+            android:id="@+id/heightInPicker"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp" />
 
-        </com.google.android.material.textfield.TextInputLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:text="@string/in"
+            android:textSize="25sp" />
 
     </LinearLayout>
 
-    <com.google.android.material.button.MaterialButton
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
         android:id="@+id/dialogHeightSaveBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end"
-        android:layout_marginTop="10dp"
+        android:layout_margin="10dp"
+        android:backgroundTint="@color/black"
+        android:textColor="@color/white"
         android:text="@string/save" />
 
 </LinearLayout>

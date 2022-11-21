@@ -28,7 +28,11 @@ class PerDayExercisesFragment : Fragment() {
 	): View {
 		// Inflate the layout for this fragment
 		binding = FragmentPerDayExercisesBinding.inflate(inflater, container, false)
+		return binding.root
+	}
 
+	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+		super.onViewCreated(view, savedInstanceState)
 		binding.perDayImageView.setImageResource(levelImg)
 		binding.perDayText.text = requireArguments().getString("Day")
 
@@ -39,10 +43,6 @@ class PerDayExercisesFragment : Fragment() {
 			findNavController().navigate(R.id.action_perDayExercisesFragment_to_timerFragment)
 		}
 
-		return binding.root
-	}
-
-	override fun onResume() {
 		val tempList = getList(levelName)
 
 		val day = requireArguments().getString("Day")!!
@@ -75,7 +75,6 @@ class PerDayExercisesFragment : Fragment() {
 				PerDayExercisesAdapter(list, this, findNavController(), requireContext())
 		}
 
-		super.onResume()
 	}
 
 	private fun getList(plan: String): ArrayList<Exercises> = when (plan) {

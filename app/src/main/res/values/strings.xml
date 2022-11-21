@@ -51,4 +51,12 @@
     <string name="daily_goals">Daily goals</string>
     <string name="weight_amp_height"><![CDATA[Weight & Height]]></string>
     <string name="daily_report">Daily report</string>
+    <string name="kg_m_u00b2">Kg/m²</string>
+    <string name="gender">Gender</string>
+    <string name="male">Male</string>
+    <string name="female">Female</string>
+    <string name="hi">Hi</string>
+    <string name="your_name">your name</string>
+    <string name="welcome_to_easy_yoga">Welcome to Easy yoga</string>
+    <string name="health_tips">Health Tips</string>
 </resources>

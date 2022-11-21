@@ -2,6 +2,7 @@ package com.example.easyyoga.fragments
 
 import android.content.Context
 import android.content.SharedPreferences
+import android.graphics.Color
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -28,8 +29,9 @@ class SplashFragment : Fragment() {
 	private lateinit var fadeOutAnim: Animation
 	private lateinit var fadeInAnim: Animation
 
-	private var gone: Int = 0
-	private var visible: Int = 0
+	private var gone = 0
+	private var visible = 0
+	private var gender = "Male"
 
 	override fun onCreateView(
 		inflater: LayoutInflater, container: ViewGroup?,
@@ -37,6 +39,11 @@ class SplashFragment : Fragment() {
 	): View {
 		// Inflate the layout for this fragment
 		binding = FragmentSplashBinding.inflate(inflater, container, false)
+		return binding.root
+	}
+
+	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+		super.onViewCreated(view, savedInstanceState)
 
 		pref = requireContext().getSharedPreferences("UserData", AppCompatActivity.MODE_PRIVATE)
 
@@ -83,8 +90,8 @@ class SplashFragment : Fragment() {
 			askUser(requireContext())
 		}
 
-		return binding.root
 	}
+
 
 	private fun askUser(context: Context) {
 		val editor = pref.edit()
@@ -118,7 +125,7 @@ class SplashFragment : Fragment() {
 
 		//name save button click
 		binding.nameSaveBtn.setOnClickListener {
-			if(binding.yourNameEditText.text!!.isNotBlank()){
+			if (binding.yourNameEditText.text!!.isNotBlank()) {
 				binding.enterYourNameLayout.startAnimation(fadeOutAnim)
 				binding.enterYourNameLayout.visibility = gone
 				binding.wHLayout.visibility = visible
@@ -127,7 +134,8 @@ class SplashFragment : Fragment() {
 				binding.nameSaveBtn.isClickable = false
 				imm.hideSoftInputFromWindow(it.windowToken, 0)
 				//save name in preference TODO
-				editor.putString("yourName",binding.yourNameEditText.text.toString())
+				editor.putString("yourName", binding.yourNameEditText.text.toString())
+				editor.putString("gender",gender)
 				editor.apply()
 			} else {
 				binding.yourNameEditTextLayout.error = "please enter your name!!"
@@ -188,7 +196,25 @@ class SplashFragment : Fragment() {
 			editor.apply()
 			Handler(Looper.getMainLooper()).postDelayed({
 				findNavController().navigate(R.id.action_splashFragment_to_navigationFragment)
-			},2000)
+			}, 2000)
+		}
+
+		//male button click
+		binding.maleBtn.setOnClickListener {
+			gender = "Male"
+			binding.femaleBtn.setBackgroundColor(Color.WHITE)
+			binding.femaleBtn.setTextColor(Color.BLACK)
+			binding.maleBtn.setBackgroundColor(Color.BLACK)
+			binding.maleBtn.setTextColor(Color.WHITE)
+		}
+
+		//female button click
+		binding.femaleBtn.setOnClickListener {
+			gender = "Female"
+			binding.maleBtn.setBackgroundColor(Color.WHITE)
+			binding.maleBtn.setTextColor(Color.BLACK)
+			binding.femaleBtn.setBackgroundColor(Color.BLACK)
+			binding.femaleBtn.setTextColor(Color.WHITE)
 		}
 	}
 }

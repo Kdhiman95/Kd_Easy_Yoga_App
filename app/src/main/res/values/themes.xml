@@ -32,6 +32,6 @@
         <item name="android:navigationBarColor">@color/gray</item>
         <item name="android:windowLightStatusBar" tools:targetApi="27">true</item>
         <item name="android:windowLightNavigationBar" tools:targetApi="27">true</item>
-
+        <item name="android:windowDisablePreview">true</item>
     </style>
 </resources>

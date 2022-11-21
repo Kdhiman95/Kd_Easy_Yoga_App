@@ -1,8 +1,10 @@
 package com.example.easyyoga.adapters
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.navigation.NavController
@@ -14,6 +16,7 @@ import com.example.easyyoga.utils.LevelsData.Companion.levelName
 
 class LevelAdapter(
 	private val list: ArrayList<Levels>,
+	private val context: Context,
 	private val navController: NavController,
 ) :
 	RecyclerView.Adapter<LevelAdapter.LevelViewHolder>() {
@@ -26,6 +29,10 @@ class LevelAdapter(
 		init {
 			levelText = view.findViewById(R.id.levelText)
 			levelImage = view.findViewById(R.id.levelImage)
+
+			val anim = AnimationUtils.loadAnimation(context,R.anim.slide_in_right)
+			anim.duration = 500
+			view.startAnimation(anim)
 
 			view.setOnClickListener {
 				levelName = list[adapterPosition].title

@@ -43,6 +43,11 @@ class ReportFragment : Fragment() {
 	): View {
 		// Inflate the layout for this fragment
 		binding = FragmentReportBinding.inflate(inflater, container, false)
+		return binding.root
+	}
+
+	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+		super.onViewCreated(view, savedInstanceState)
 
 		val repo = ((activity as FragmentActivity).application as EasyYogaApplication).repository
 
@@ -73,10 +78,7 @@ class ReportFragment : Fragment() {
 				CalenderAdapter(getPre(), exModel, durModel)
 		}
 
-		return binding.root
-	}
 
-	override fun onResume() {
 		setBmi(requireContext())
 
 		durModel.getDuration(ft.format(cal.time))
@@ -105,7 +107,8 @@ class ReportFragment : Fragment() {
 
 			binding.totalCaloriesText.text = ((calories * 100.0).roundToInt() / 100.0).toString()
 
-			val anim = ProgressBarAnimation(binding.caloriesIndicator, 0F*100, calories.toFloat()*1000)
+			val anim =
+				ProgressBarAnimation(binding.caloriesIndicator, 0F * 100, calories.toFloat() * 1000)
 			anim.duration = 1000
 
 			binding.caloriesIndicator.startAnimation(anim)
@@ -128,7 +131,6 @@ class ReportFragment : Fragment() {
 			}
 		}
 
-		super.onResume()
 	}
 
 	private fun setBmi(requireContext: Context) {
@@ -146,12 +148,22 @@ class ReportFragment : Fragment() {
 
 		binding.bmiText.text = ((bmi * 100.0).roundToInt() / 100.0).toString()
 
-		if (bmi <= 18.5)
+		if (bmi <= 18.5) {
 			binding.bmiText.setTextColor(Color.parseColor("#00008B"))
-		else if (bmi >= 25)
+			binding.bmiProgressBar.setIndicatorColor(Color.parseColor("#00008B"))
+		} else if (bmi >= 25) {
 			binding.bmiText.setTextColor(Color.parseColor("#8B0000"))
-		else
+			binding.bmiProgressBar.setIndicatorColor(Color.parseColor("#8B0000"))
+		} else {
 			binding.bmiText.setTextColor(Color.parseColor("#028745"))
+			binding.bmiProgressBar.setIndicatorColor(Color.parseColor("#028745"))
+		}
+		binding.bmiProgressBar.max = 40 * 1000
+
+		val anim = ProgressBarAnimation(binding.bmiProgressBar, 0F * 100, bmi.toFloat() * 1000)
+		anim.duration = 1000
+
+		binding.bmiProgressBar.startAnimation(anim)
 
 		binding.caloriesIndicator.max = pref.getString("calories", "5")!!.toInt() * 1000
 	}

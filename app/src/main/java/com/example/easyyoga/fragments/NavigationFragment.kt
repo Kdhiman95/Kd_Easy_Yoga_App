@@ -24,7 +24,11 @@ class NavigationFragment : Fragment() {
 	): View {
 		// Inflate the layout for this fragment
 		binding = FragmentNavigationBinding.inflate(inflater, container, false)
+		return binding.root
+	}
 
+	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+		super.onViewCreated(view, savedInstanceState)
 		navHostFragment =
 			childFragmentManager.findFragmentById(R.id.mainNavigationFragment) as NavHostFragment
 
@@ -39,8 +43,5 @@ class NavigationFragment : Fragment() {
 				binding.mainBottomNavigation.visibility = View.GONE
 			}
 		}
-
-		return binding.root
 	}
-
 }

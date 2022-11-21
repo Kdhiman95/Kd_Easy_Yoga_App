@@ -52,6 +52,11 @@ class TimerFragment : Fragment() {
 	): View {
 		// Inflate the layout for this fragment
 		binding = FragmentTimerBinding.inflate(inflater, container, false)
+		return binding.root
+	}
+
+	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+		super.onViewCreated(view, savedInstanceState)
 
 		val repo = ((activity as FragmentActivity).application as EasyYogaApplication).repository
 
@@ -97,7 +102,13 @@ class TimerFragment : Fragment() {
 			tts.stop()
 		}
 
-		return binding.root
+	}
+
+	override fun onDestroyView() {
+		restTimer.cancel()
+		exTimer?.cancel()
+		tts.stop()
+		super.onDestroyView()
 	}
 
 	private fun showDialog(context: Context){
@@ -112,13 +123,6 @@ class TimerFragment : Fragment() {
 
 			}
 			.show()
-	}
-
-	override fun onDestroyView() {
-		restTimer.cancel()
-		exTimer?.cancel()
-		tts.stop()
-		super.onDestroyView()
 	}
 
 	private fun setOrUpdateDuration() {

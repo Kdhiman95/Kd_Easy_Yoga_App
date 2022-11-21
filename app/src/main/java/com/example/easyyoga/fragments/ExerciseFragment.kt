@@ -25,7 +25,11 @@ class ExerciseFragment : Fragment() {
 	): View {
 		// Inflate the layout for this fragment
 		binding = FragmentExerciseBinding.inflate(inflater, container, false)
+		return binding.root
+	}
 
+	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+		super.onViewCreated(view, savedInstanceState)
 		exerciseId = requireArguments().getInt("Id")
 		val img = requireArguments().getInt("Img")
 		val exerciseName = requireArguments().getString("ExerciseName")
@@ -67,8 +71,6 @@ class ExerciseFragment : Fragment() {
 			val dur = updateDurationExercise()
 			setSaveVisibility(dur)
 		}
-
-		return binding.root
 	}
 
 	private fun updateDurationExercise(): Long {
