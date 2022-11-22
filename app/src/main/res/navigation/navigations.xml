@@ -15,6 +15,11 @@
             app:destination="@id/daysFragment"
             app:enterAnim="@android:anim/slide_in_left"
             app:exitAnim="@android:anim/slide_in_left" />
+        <action
+            android:id="@+id/action_homeFragment_to_webViewFragment"
+            app:destination="@id/webViewFragment"
+            app:enterAnim="@anim/slide_up"
+            app:popExitAnim="@anim/slide_down" />
     </fragment>
     <fragment
         android:id="@+id/reportFragment"
@@ -25,8 +30,7 @@
         android:id="@+id/profileFragment"
         android:name="com.example.easyyoga.fragments.ProfileFragment"
         android:label="fragment_profile"
-        tools:layout="@layout/fragment_profile" >
-    </fragment>
+        tools:layout="@layout/fragment_profile" />
     <fragment
         android:id="@+id/daysFragment"
         android:name="com.example.easyyoga.fragments.DaysFragment"
@@ -74,5 +78,16 @@
             app:enterAnim="@anim/slide_down"
             app:popEnterAnim="@anim/pop_down"
             app:popUpTo="@id/homeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/webViewFragment"
+        android:name="com.example.easyyoga.fragments.WebViewFragment"
+        android:label="fragment_web_view"
+        tools:layout="@layout/fragment_web_view">
+        <action
+            android:id="@+id/action_webViewFragment_to_homeFragment"
+            app:destination="@id/homeFragment"
+            app:enterAnim="@anim/slide_down"
+            app:popExitAnim="@anim/slide_up" />
     </fragment>
 </navigation>

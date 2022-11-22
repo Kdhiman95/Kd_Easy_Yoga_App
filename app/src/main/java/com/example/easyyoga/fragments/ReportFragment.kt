@@ -139,6 +139,11 @@ class ReportFragment : Fragment() {
 		val weight = pref.getString("weight", null)!!.toFloat()
 		val feet = pref.getString("heightFeet", null)!!.toFloat()
 		val inch = pref.getString("heightIn", null)!!.toFloat()
+		val goal = pref.getString("calories", "")!!
+
+		val s = "out of $goal"
+
+		binding.totalGoal.text = s
 
 		val finalInch = (feet * 12) + inch
 

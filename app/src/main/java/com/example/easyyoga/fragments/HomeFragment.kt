@@ -33,6 +33,11 @@ class HomeFragment : Fragment() {
 	): View {
 		// Inflate the layout for this fragment
 		binding = FragmentHomeBinding.inflate(inflater, container, false)
+		return binding.root
+	}
+
+	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+		super.onViewCreated(view, savedInstanceState)
 
 		val pref = requireContext().getSharedPreferences("UserData", AppCompatActivity.MODE_PRIVATE)
 
@@ -48,11 +53,6 @@ class HomeFragment : Fragment() {
 
 		binding.yourName.text = pref.getString("yourName", "")!!
 
-		return binding.root
-	}
-
-	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-		super.onViewCreated(view, savedInstanceState)
 		val slideInRight = AnimationUtils.loadAnimation(requireContext(), R.anim.slide_in_right)
 		slideInRight.duration = 500
 
@@ -60,7 +60,8 @@ class HomeFragment : Fragment() {
 			AnimationUtils.loadAnimation(requireContext(), androidx.appcompat.R.anim.abc_fade_in)
 		fadeIn.duration = 1000
 
-		val fadeOut = AnimationUtils.loadAnimation(requireContext(), androidx.appcompat.R.anim.abc_fade_out)
+		val fadeOut =
+			AnimationUtils.loadAnimation(requireContext(), androidx.appcompat.R.anim.abc_fade_out)
 		fadeOut.duration = 1000
 
 		val rotateAnim = AnimationUtils.loadAnimation(requireContext(), R.anim.rotate)
@@ -71,7 +72,8 @@ class HomeFragment : Fragment() {
 		binding.homeFragmentRecV.adapter =
 			LevelAdapter(levelsList, requireContext(), findNavController())
 
-		binding.tipRecV.adapter = TipAdapter(requireContext(),getTipListIndex())
+		binding.tipRecV.adapter =
+			TipAdapter(requireContext(), getTipListIndex(), findNavController())
 
 		binding.reloadBtn.setOnClickListener {
 			binding.reloadBtn.isCheckable = false
@@ -80,18 +82,19 @@ class HomeFragment : Fragment() {
 			Handler(Looper.getMainLooper()).postDelayed({
 				binding.reloadBtn.isCheckable = true
 				binding.tipRecV.startAnimation(fadeIn)
-				binding.tipRecV.adapter = TipAdapter(requireContext(), getTipListIndex())
+				binding.tipRecV.adapter =
+					TipAdapter(requireContext(), getTipListIndex(), findNavController())
 			}, 1000)
 		}
 	}
 
-	private fun getTipListIndex(): ArrayList<Int>{
+	private fun getTipListIndex(): ArrayList<Int> {
 		val list = arrayListOf<Int>()
-		while(list.size<3){
-			val random = (0..10).random()
-			if(list.contains(random)){
+		while (list.size < 3) {
+			val random = (0..19).random()
+			if (list.contains(random)) {
 				continue
-			}else{
+			} else {
 				list.add(random)
 			}
 		}

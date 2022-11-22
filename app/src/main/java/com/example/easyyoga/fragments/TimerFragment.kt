@@ -83,20 +83,20 @@ class TimerFragment : Fragment() {
 
 		binding.timerFragmentNextBtn.setOnClickListener {
 			++i
-			if(i< dailyList.size){
+			if (i < dailyList.size) {
 				restTimer.cancel()
 				exTimer?.cancel()
-				startTimer(i,requireContext())
+				startTimer(i, requireContext())
 				binding.dailyProgressIndicator.progress = ++countEx
 			}
 			tts.stop()
 		}
 		binding.timerFragmentPreBtn.setOnClickListener {
 			--i
-			if(i>=0){
+			if (i >= 0) {
 				restTimer.cancel()
 				exTimer?.cancel()
-				startTimer(i,requireContext())
+				startTimer(i, requireContext())
 				binding.dailyProgressIndicator.progress = --countEx
 			}
 			tts.stop()
@@ -111,7 +111,7 @@ class TimerFragment : Fragment() {
 		super.onDestroyView()
 	}
 
-	private fun showDialog(context: Context){
+	private fun showDialog(context: Context) {
 		val alertDialog = MaterialAlertDialogBuilder(context)
 		alertDialog.setMessage("Are you sure you want to Quit the exercise?")
 			.setCancelable(false)
@@ -140,17 +140,21 @@ class TimerFragment : Fragment() {
 	}
 
 	private fun startTimer(index: Int, context: Context) {
+		// all done
 		if (index == dailyList.size) {
 			setOrUpdateDuration()
 			findNavController().navigate(R.id.action_timerFragment_to_homeFragment)
 			return
 		}
+
+		// start
 		updateUi(dailyList[index])
 		val ready =
 			"Ready to go the next ${dailyList[index].duration} seconds ${dailyList[index].exerciseName}"
 		binding.instructionText.text = ready
 		speakText(ready, context)
 
+		//start timer for 10 sec
 		binding.timerProgress.max = 10
 		restTimer = object : CountDownTimer(10000, 1000) {
 			override fun onTick(miliTime: Long) {
@@ -159,6 +163,7 @@ class TimerFragment : Fragment() {
 			}
 
 			override fun onFinish() {
+				// insert ex in database
 				val temp = dailyList[index]
 				val ex = ExercisesEntity(
 					0,
@@ -170,9 +175,13 @@ class TimerFragment : Fragment() {
 					ft.format(cal.time)
 				)
 				exerciseModel.insertExercise(ex)
+
+				// start
 				val start = "Start"
 				binding.instructionText.text = start
 				speakText(start, context)
+
+				// start timer for ex
 				binding.timerProgress.max = dailyList[index].duration.toInt()
 				exTimer = object : CountDownTimer(dailyList[index].duration * 1000, 1000) {
 					override fun onTick(miliTime: Long) {

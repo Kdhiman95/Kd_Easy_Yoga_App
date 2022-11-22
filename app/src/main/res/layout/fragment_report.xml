@@ -116,6 +116,15 @@
                                             android:textAlignment="center"
                                             android:textSize="18sp" />
 
+                                        <TextView
+                                            android:id="@+id/totalGoal"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:text="@string/out_of"
+                                            android:textAlignment="center"
+                                            android:textColor="@color/level_color"
+                                            android:textSize="11sp" />
+
                                     </LinearLayout>
 
                                 </androidx.constraintlayout.widget.ConstraintLayout>
@@ -209,8 +218,8 @@
                                     android:id="@+id/bmiText"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="@string/_1"
                                     android:layout_marginEnd="10dp"
+                                    android:text="@string/_1"
                                     android:textAlignment="textEnd"
                                     android:textSize="25sp" />
 
@@ -218,7 +227,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="@string/kg_m_u00b2"
-                                    android:textSize="25sp"/>
+                                    android:textSize="25sp" />
 
                             </LinearLayout>
 
@@ -227,9 +236,9 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_margin="20dp"
+                                android:elevation="20dp"
                                 android:max="40"
-                                android:progress="20"
-                                android:elevation="20dp"/>
+                                android:progress="20" />
 
                         </LinearLayout>
 

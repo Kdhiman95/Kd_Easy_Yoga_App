@@ -1,6 +1,5 @@
 package com.example.easyyoga.model.repo
 
-import android.util.Log
 import com.example.easyyoga.model.room_database.DurationEntity
 import com.example.easyyoga.model.room_database.EasyYogaDatabase
 import com.example.easyyoga.model.room_database.ExercisesEntity
@@ -29,7 +28,6 @@ class EasyYogaRepository(private val easyYogaDatabase: EasyYogaDatabase) {
 		easyYogaDatabase.exerciseDao().getNoOfDays(level)
 
 	suspend fun getLevelDuration(date: String, level: String): List<DurationEntity> {
-		Log.d("LEVEL123", "getLevelDuration: $level")
 		return easyYogaDatabase.exerciseDao().getLevelDuration(date, level)
 	}
 }

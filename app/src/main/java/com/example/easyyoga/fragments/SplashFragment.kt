@@ -135,7 +135,7 @@ class SplashFragment : Fragment() {
 				imm.hideSoftInputFromWindow(it.windowToken, 0)
 				//save name in preference TODO
 				editor.putString("yourName", binding.yourNameEditText.text.toString())
-				editor.putString("gender",gender)
+				editor.putString("gender", gender)
 				editor.apply()
 			} else {
 				binding.yourNameEditTextLayout.error = "please enter your name!!"

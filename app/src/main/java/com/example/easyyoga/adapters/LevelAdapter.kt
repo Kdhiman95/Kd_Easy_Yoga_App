@@ -30,7 +30,7 @@ class LevelAdapter(
 			levelText = view.findViewById(R.id.levelText)
 			levelImage = view.findViewById(R.id.levelImage)
 
-			val anim = AnimationUtils.loadAnimation(context,R.anim.slide_in_right)
+			val anim = AnimationUtils.loadAnimation(context, R.anim.slide_in_right)
 			anim.duration = 500
 			view.startAnimation(anim)
 
@@ -40,6 +40,7 @@ class LevelAdapter(
 				navController.navigate(R.id.action_homeFragment_to_daysFragment)
 			}
 		}
+
 		fun bind(levels: Levels) {
 			levelText.text = levels.title
 			levelImage.setImageResource(levels.img)

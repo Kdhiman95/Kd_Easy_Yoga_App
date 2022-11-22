@@ -26,12 +26,13 @@ class ExerciseAdapter(private val list: List<ExercisesEntity>, private val conte
 			exerciseName = view.findViewById(R.id.exerciseName)
 			exerciseDuration = view.findViewById(R.id.exerciseDuration)
 
-			val anim = AnimationUtils.loadAnimation(context, androidx.appcompat.R.anim.abc_slide_in_bottom)
+			val anim =
+				AnimationUtils.loadAnimation(context, androidx.appcompat.R.anim.abc_slide_in_bottom)
 			anim.duration = 1000
 			view.startAnimation(anim)
 		}
 
-		fun bind(ex : ExercisesEntity) {
+		fun bind(ex: ExercisesEntity) {
 			Glide.with(context).load(ex.img).into(image)
 			exerciseName.text = ex.exName
 			exerciseDuration.text = ex.exDuration.toString()

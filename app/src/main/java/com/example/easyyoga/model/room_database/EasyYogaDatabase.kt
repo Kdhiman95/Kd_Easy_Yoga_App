@@ -14,7 +14,7 @@ abstract class EasyYogaDatabase : RoomDatabase() {
 		private var INSTANCE: EasyYogaDatabase? = null
 
 		fun getDatabase(context: Context): EasyYogaDatabase {
-			if(INSTANCE == null){
+			if (INSTANCE == null) {
 				synchronized(this) {
 					INSTANCE = Room.databaseBuilder(
 						context,

@@ -1,6 +1,5 @@
 package com.example.easyyoga.utils
 
-import androidx.navigation.NavController
 import com.example.easyyoga.model.room_database.DurationEntity
 import java.text.SimpleDateFormat
 import java.util.*

@@ -15,28 +15,28 @@ import java.util.*
 class CalenderAdapter(
 	private val list: ArrayList<String>,
 	private val exModel: ExerciseViewModel,
-	private val durModel: DurationViewModel
+	private val durModel: DurationViewModel,
 ) :
 	RecyclerView.Adapter<CalenderAdapter.DateViewHolder>() {
 
 	private val cal = Calendar.getInstance()
 	private val ft = SimpleDateFormat("yyyy-MM-dd", Locale.US)
-	private var selectedItemPos = if(list.contains(ft.format(cal.time))){
+	private var selectedItemPos = if (list.contains(ft.format(cal.time))) {
 		getTodayDateSelected()
-	}else {
+	} else {
 		-1
 	}
 
-	private var lastItemSelectedPos = if(list.contains(ft.format(cal.time))){
+	private var lastItemSelectedPos = if (list.contains(ft.format(cal.time))) {
 		getTodayDateSelected()
-	}else {
+	} else {
 		-1
 	}
 
 	private fun getTodayDateSelected(): Int {
 		var index = 0
-		for(i in 0 until list.size){
-			if(list[i] == ft.format(cal.time)){
+		for (i in 0 until list.size) {
+			if (list[i] == ft.format(cal.time)) {
 				index = i
 			}
 		}

@@ -46,7 +46,7 @@ class ExerciseFragment : Fragment() {
 
 		//finding exercise index for updating exercise duration
 		index = when (exerciseId) {
-			20,30-> 10
+			20, 30 -> 10
 			in 11..30 -> exerciseId % 10
 			else -> exerciseId
 		}

@@ -14,7 +14,12 @@ class EasyYogaApplication : Application() {
 		AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
 		initialize()
 
-		if (LevelsData.levelsList.isEmpty() && ExercisesData.beginnerPlanList.isEmpty() && ExercisesData.intermediatePlanList.isEmpty() && ExercisesData.advancedPlanList.isEmpty()) {
+		if (
+			LevelsData.levelsList.isEmpty() &&
+			ExercisesData.beginnerPlanList.isEmpty() &&
+			ExercisesData.intermediatePlanList.isEmpty() &&
+			ExercisesData.advancedPlanList.isEmpty()
+		) {
 			LevelsData.addLevelsList()
 			ExercisesData.addBeginnerPlanList()
 			ExercisesData.addIntermediatePlanList()

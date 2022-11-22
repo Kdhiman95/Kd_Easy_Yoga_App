@@ -125,6 +125,10 @@
                 app:layout_constraintTop_toTopOf="parent"
                 tools:listitem="@layout/exercise_layout" />
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="100dp" />
+
         </LinearLayout>
 
     </androidx.core.widget.NestedScrollView>
